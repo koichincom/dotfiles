@@ -2,83 +2,57 @@
 
 Personal configuration files managed with GNU Stow.
 
-## Contents
+## Packages
 
 - **nvim** - Neovim configuration
 - **nvim-dev** - Development Neovim configuration
-- **ghostty** - Ghostty terminal emulator configuration
+- **ghostty** - Ghostty terminal emulator
 - **editorconfig** - Global editor settings
-- **opencode** - OpenCode/Claude configuration
-- **git** - Git configuration with aliases and global ignore patterns
-- **zsh** - Zsh shell configuration (interactive and login)
+- **opencode** - OpenCode/Claude CLI tool
+- **git** - Git with aliases and global ignore patterns
+- **zsh** - Zsh shell (`.zprofile` for PATH, `.zshrc` for interactive)
+
+## Quick Start
+
+```bash
+git clone https://github.com/koichincom/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+stow nvim zsh git  # or whichever packages you want
+```
 
 ## Requirements
 
 - GNU Stow
 - Zsh
-- Homebrew (for macOS)
+- Homebrew (macOS)
 
-## Installation
+### Additional Dependencies
 
-Clone this repository to your home directory:
-
+**Zsh plugins:**
 ```bash
-git clone <repository-url> ~/.dotfiles
-cd ~/.dotfiles
+brew install zsh-syntax-highlighting zsh-autosuggestions
 ```
 
-Install all packages:
-
+**OpenCode plugins:**
 ```bash
-stow nvim nvim-dev ghostty editorconfig opencode git zsh
-```
-
-Or install packages individually:
-
-```bash
-stow nvim
-stow zsh
-stow git
+cd ~/.config/opencode && npm install
 ```
 
 ## Notes
 
 ### Git Configuration
 
-The `.gitconfig` uses a GitHub noreply email address. The configuration includes:
-- Common git aliases (st, co, br, cm, lg, etc.)
-- Global gitignore patterns for macOS, Node.js, Python, and common editors
+Uses GitHub noreply email. Includes common aliases:
+- `st` (status), `co` (checkout), `br` (branch), `cm` (commit -m)
+- `lg` (pretty log), `aa` (add --all), `unstage`
 
 ### Zsh Configuration
 
-- `.zprofile` - Login shell configuration (PATH setup)
-- `.zshrc` - Interactive shell configuration (aliases, plugins)
+- `.zprofile` - PATH setup (Homebrew, Python, Ruby, Node.js)
+- `.zshrc` - Interactive features (aliases, plugins)
 
-Requires zsh-syntax-highlighting and zsh-autosuggestions plugins:
-
-```bash
-brew install zsh-syntax-highlighting zsh-autosuggestions
-```
-
-### OpenCode Configuration
-
-The OpenCode package includes plugin configuration. Install plugins after stowing:
-
-```bash
-cd ~/.config/opencode
-npm install
-```
-
-## Uninstalling
-
-Remove symlinks for specific packages:
-
-```bash
-cd ~/.dotfiles
-stow -D nvim
-stow -D zsh
-```
+All paths use `$HOME` for portability.
 
 ## License
 
-Personal configuration files - use at your own discretion.
+MIT License - see [LICENSE](LICENSE) file.
