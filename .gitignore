@@ -1,0 +1,19 @@
+# Node/package manager dependencies
+node_modules/
+package-lock.json
+bun.lock
+yarn.lock
+
+# OS files
+.DS_Store
+
+# Editor files
+*.swp
+*.swo
+*~
+
+# Personal/local overrides
+*.local
+*.local.json
+*.backup
+*.bak
