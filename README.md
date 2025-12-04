@@ -1,6 +1,6 @@
 # Dotfiles
 
-Personal configuration files managed with GNU Stow.
+Personal configuration files managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
 ## Packages
 
@@ -18,19 +18,6 @@ Personal configuration files managed with GNU Stow.
 git clone https://github.com/koichincom/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 stow nvim zsh git
-```
-
-## Requirements
-
-- GNU Stow
-- Zsh
-- Homebrew (macOS)
-
-### Dependencies
-
-```bash
-brew install zsh-syntax-highlighting zsh-autosuggestions
-cd ~/.config/opencode && npm install
 ```
 
 ## License
