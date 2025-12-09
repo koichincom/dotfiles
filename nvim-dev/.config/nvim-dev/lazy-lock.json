@@ -9,7 +9,7 @@
     },
     "conform.nvim": {
         "branch": "master",
-        "commit": "4993e07fac6679d0a5005aa7499e0bad2bd39f19"
+        "commit": "ffe26e8df8115c9665d24231f8a49fadb2d611ce"
     },
     "copilot.vim": {
         "branch": "release",
@@ -37,7 +37,7 @@
     },
     "mason-lspconfig.nvim": {
         "branch": "main",
-        "commit": "0b9bb925c000ae649ff7e7149c8cd00031f4b539"
+        "commit": "c55bd8a8fb191e24176c206a7af1dd51ce7276a5"
     },
     "mason-tool-installer.nvim": {
         "branch": "main",
@@ -57,7 +57,7 @@
     },
     "nvim-autopairs": {
         "branch": "master",
-        "commit": "7a2c97cccd60abc559344042fefb1d5a85b3e33b"
+        "commit": "d9e44e54384e5b0f3536339c65484f2e41b528e3"
     },
     "nvim-colorizer.lua": {
         "branch": "master",
@@ -65,11 +65,11 @@
     },
     "nvim-lint": {
         "branch": "master",
-        "commit": "d1118791070d090777398792a73032a0ca5c79ff"
+        "commit": "ebe535956106c60405b02220246e135910f6853d"
     },
     "nvim-lspconfig": {
         "branch": "master",
-        "commit": "effe4bf2e1afb881ea67291c648b68dd3dfc927a"
+        "commit": "a2bd1cf7b0446a7414aaf373cea5e4ca804c9c69"
     },
     "nvim-notify": {
         "branch": "master",
