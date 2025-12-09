@@ -4,7 +4,7 @@ local M = {}
 local last_full_path = nil
 
 function M.get_path_name()
-    local full_path = vim.fs.normalize(vim.fn.expand "%:p")
+    local full_path = vim.fs.normalize(vim.fn.expand("%:p"))
     if full_path == last_full_path then
         return nil
     end
@@ -59,7 +59,7 @@ function M.get_file_mod()
         return nil
     end
     if vim.bo.modified then
-        return ""
+        return "M"
     else
         return ""
     end

@@ -1,25 +1,25 @@
 local M = {}
 
-local cursorline_enabled = true
+local is_enabled = true
 
 function M.turn_on()
-    if cursorline_enabled then
+    if is_enabled then
         return
     end
     vim.wo.cursorline = true
-    cursorline_enabled = true
+    is_enabled = true
 end
 
 function M.turn_off()
-    if not cursorline_enabled then
+    if not is_enabled then
         return
     end
     vim.wo.cursorline = false
-    cursorline_enabled = false
+    is_enabled = false
 end
 
 local function toggle()
-    if cursorline_enabled then
+    if is_enabled then
         M.turn_off()
     else
         M.turn_on()

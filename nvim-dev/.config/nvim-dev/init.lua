@@ -7,6 +7,5 @@ require("modules.colorscheme").init() -- After loading colorscheme plugins
 require("modules.highlight.main").init() -- After loading colorscheme module
 
 -- No strict dependencies
-require("modules.winbar.main").update_component("cwd", nil)
 require("core.autocmds").init_general()
 require("core.keymaps")
