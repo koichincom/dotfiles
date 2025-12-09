@@ -11,12 +11,13 @@ return {
             typescript = { "eslint_d" },
             c = { "cpplint" },
             cpp = { "cpplint" },
+            html = { "markuplint" },
             css = { "stylelint" },
             markdown = { "markdownlint" },
             json = { "jsonlint" },
         }
 
         local autocmds = require("core.autocmds")
-        autocmds.init_linting()
+        autocmds.init_lint()
     end,
 }
