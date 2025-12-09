@@ -5,7 +5,7 @@
 ## P1
 
 - [ ] Configure Opencode.nvim: whether to have the screen inside neovim or outside
-    - [ ] Before sending any lines, we should format and save the buffer first
+    - [ ] Before sending any lines, I should format and save the buffer first
 - [ ] Winbar module system finalization
     - [x] Init order issue
     - [x] branch's component_map: combine the 3 separated ones
@@ -14,7 +14,6 @@
     - [x] file_mod and wrap initialization
     - [x] Core winbar components (path, encoding, file_mod, auto_save, wrap)
           ：q - [x] Special buffer handling (skip render for buftype ~= "")
-
     - [x] vim.opt investigation - not applicable for winbar (string-only option, table.concat is optimal)
     - [x] Copilot indicator component (After setting up llm-completion module system)
     - [x] Layout update (Left-Center-Right)
@@ -32,7 +31,7 @@
         - [x] Remove diagnostics_hide from components_map
         - [x] Simplify render() to use diagnostics.state directly
         - [ ] Fix autocmd triggers: Determine if OptionSet buftype is needed or if BufEnter + DiagnosticChanged is sufficient
-    - [ ] Finalize the save indicator component (currently somehow unstable), make sure it shows if the current buffer is modified and not saved
+    - [x] Finalize the modified indicator component (currently somehow unstable), make sure it shows if the current buffer is modified and not saved
     - [x] Autosave indicator
         - [x] Consider autowriteall and autowrite options interaction, the former is set, the latter is not
     - [x] Edge case when the internal value is changed in the situation where the redering is skipped, and then enter a non-skipped buffer should trigger the re-rendering
