@@ -2,32 +2,27 @@ local M = {}
 
 function M.get_copilot(is_enable)
     if is_enable then
-        return ""
+        return { text = "", is_alert = false }
     else
-        return "!C"
+        return { text = "!C", is_alert = true }
     end
 end
 
 function M.get_wrap(is_enable)
     if is_enable then
-        return "W"
+        return { text = "W", is_alert = true }
     else
-        return ""
+        return { text = "", is_alert = false }
     end
-end
-
-function M.get_cwd()
-    local cwd = vim.fs.basename(vim.fn.getcwd())
-    return cwd
 end
 
 function M.get_auto_write(state)
     if state == "true" then
-        return ""
+        return { text = "", is_alert = false }
     elseif state == "partial" then
-        return "s"
+        return { text = "s", is_alert = true }
     else
-        return "!S"
+        return { text = "!S", is_alert = true }
     end
 end
 
