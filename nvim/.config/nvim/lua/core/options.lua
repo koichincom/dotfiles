@@ -1,9 +1,7 @@
 -- User Interface
 vim.o.termguicolors = true -- Enable true color support (16 million colors)
 vim.o.laststatus = 0 -- Hide status line (using winbar instead)
-vim.opt.title = true -- Set terminal title
 vim.opt.titlelen = 0 -- No limit on title length
-vim.opt.titlestring = "Neovim"
 vim.wo.number = true -- Show absolute line numbers
 vim.wo.relativenumber = true -- Show relative line numbers for easier navigation
 vim.o.signcolumn = "yes" -- Always show sign column to prevent text shifting
