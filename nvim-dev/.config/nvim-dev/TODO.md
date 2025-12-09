@@ -2,15 +2,10 @@
 
 ## P0
 
-- [ ] New way of triggering linting and formatting
-    - [x] Formating trigger update
-    - [ ] Linting trigger update (detect the language and run "update" or "write" commands before linting if the linter of the lanauge is stdin incompatible, or only use it for bufwritepost) https://www.perplexity.ai/search/neovimtenvim-lintnotry-lintnat-P_ZkZ7BET8mx3JpDhlsGaA, but given most of the modern linters are compatible, maybe bufwritepost for incompatible ones is better than running "update" on normal linter triggers
-- [ ] Autosave adjustments for external tools like Opencode, Claude Code
-    - [ ] If I use opencode.nvim (use it inside neovim), FocusLost should not be sufficient to trigger autosave
-
 ## P1
 
 - [ ] Configure Opencode.nvim: whether to have the screen inside neovim or outside
+    - [ ] Before sending any lines, we should format and save the buffer first
 - [ ] Winbar module system finalization
     - [x] Init order issue
     - [x] branch's component_map: combine the 3 separated ones
@@ -18,7 +13,8 @@
     - [x] Branch component initialization
     - [x] file_mod and wrap initialization
     - [x] Core winbar components (path, encoding, file_mod, auto_save, wrap)
-    - [x] Special buffer handling (skip render for buftype ~= "")
+          ：q - [x] Special buffer handling (skip render for buftype ~= "")
+
     - [x] vim.opt investigation - not applicable for winbar (string-only option, table.concat is optimal)
     - [x] Copilot indicator component (After setting up llm-completion module system)
     - [x] Layout update (Left-Center-Right)
@@ -36,7 +32,11 @@
         - [x] Remove diagnostics_hide from components_map
         - [x] Simplify render() to use diagnostics.state directly
         - [ ] Fix autocmd triggers: Determine if OptionSet buftype is needed or if BufEnter + DiagnosticChanged is sufficient
-    - [ ] Finalize the save indicator component (currently somehow unstable)
+    - [ ] Finalize the save indicator component (currently somehow unstable), make sure it shows if the current buffer is modified and not saved
+    - [x] Autosave indicator
+        - [x] Consider autowriteall and autowrite options interaction, the former is set, the latter is not
+    - [x] Edge case when the internal value is changed in the situation where the redering is skipped, and then enter a non-skipped buffer should trigger the re-rendering
+    - [x] Don't skip rendering in Oil
 
 ## P2
 
@@ -48,19 +48,22 @@
 
 ## P3
 
+- [ ] Consider fff.nvim super fast file searcher
 - [ ] Configure scratch (oil preview) to the list (4 spaces indent or completely remove them)
 - [ ] Configure preset.lua (currently AI generated)
 - [ ] Winbar: word count in markdown files (after count.nvim is completed)
 - [ ] Learn: schedule and wrap to safely execute autocmd callbacks in Neovim
-- [ ] Learn: autoread and how to reload files from outside changes (e.g., Claude Code)
 - [ ] Learn: quickfix, jumplist, vim marks
 - [ ] Learn: nvim-surround usage
 - [ ] Search harpoon
 
----
-
 ## Done
 
+- [x] New way of triggering linting and formatting
+    - [x] Formating trigger update
+    - [x] Linting trigger update
+- [x] Learn: autoread and how to reload files from outside changes (e.g., Claude Code) Implemented via vim.o.autoread and FocusGained autocmd
+- [x] Autosave adjustments for external tools like Opencode, Claude Code
 - [x] I may need to set up global namespace for fallback on startup (reference: https://opencode.ai/s/QzY5hMnO)
 - [x] Reconsider autowrite system given i found vim.o.autowriteall
     - [x] Refactor autowrite logic with vim.o.autowriteall and related (now everything is changed!)

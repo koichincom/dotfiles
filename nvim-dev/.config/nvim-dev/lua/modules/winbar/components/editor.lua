@@ -21,4 +21,14 @@ function M.get_cwd()
     return cwd
 end
 
+function M.get_auto_write(state)
+    if state == "true" then
+        return ""
+    elseif state == "partial" then
+        return "s"
+    else
+        return "!S"
+    end
+end
+
 return M

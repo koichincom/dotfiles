@@ -41,6 +41,10 @@ local components_map = {
         state = "",
         getter = editor.get_copilot,
     },
+    auto_write = {
+        state = "",
+        getter = editor.get_auto_write,
+    },
 }
 
 local function join(delimiter, list)
@@ -53,7 +57,11 @@ local function join(delimiter, list)
     return table.concat(result, delimiter)
 end
 
-local function render()
+function M.render()
+    -- Skip render for special buffers, except Oil
+    if vim.bo.buftype ~= "" and vim.bo.filetype ~= "oil" then
+        return
+    end
     local cm = components_map
 
     local center_group = join(" ", {
@@ -65,6 +73,7 @@ local function render()
     local right_group = join(" ", {
         cm.copilot.state,
         cm.wrap.state,
+        cm.auto_write.state,
     })
 
     local winbar = table.concat({
@@ -93,18 +102,6 @@ local function render()
     vim.wo.winbar = winbar
 end
 
-local render_pending = false
-local function render_scheduled()
-    if render_pending then
-        return
-    end
-    render_pending = true
-    vim.schedule(function()
-        render()
-        render_pending = false
-    end)
-end
-
 function M.update_component(component_name, params)
     local component_conf = components_map[component_name]
     if not component_conf then
@@ -118,11 +115,7 @@ function M.update_component(component_name, params)
     end
     component_conf.state = state
 
-    -- Skip render for special buffers (buftype ~= "")
-    if vim.bo.buftype ~= "" then
-        return
-    end
-    render_scheduled()
+    M.render()
 end
 
 return M

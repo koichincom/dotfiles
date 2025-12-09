@@ -28,8 +28,8 @@ vim.opt.smartcase = true -- Case-sensitive if search contains uppercase
 vim.o.scrolloff = 4 -- Keep 4 lines visible above/below cursor
 
 -- File
-vim.o.hidden = false
 vim.o.autowriteall = true -- Auto-save before buffer switch/quit
+vim.o.hidden = false -- Do not allow unsaved buffers in the background works with autowriteall
 
 -- Window Management
 vim.opt.splitright = true -- Open vertical splits to the right
@@ -50,3 +50,4 @@ vim.opt.listchars = {
 vim.wo.cursorline = true
 vim.g.mapleader = " "
 vim.o.undofile = true
+vim.o.autoread = true
