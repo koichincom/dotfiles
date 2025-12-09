@@ -23,9 +23,17 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.light.gray[7], bg = colors.light.basics.bg, nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.light.red[5], bg = colors.light.basics.bg, nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
                         values = { fg = colors.light.syntax.keyword, bg = colors.light.basics.bg, nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
+                        values = { fg = colors.light.red[5], bg = colors.light.basics.bg, nocombine = true, bold = false },
                     },
                     ColorColumn = {
                         class_id = "ColorColumn",
@@ -145,9 +153,17 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.light.gray[7], bg = colors.light.green[0], nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.light.red[5], bg = colors.light.green[0], nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
                         values = { fg = colors.light.syntax.keyword, bg = colors.light.green[0], nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
+                        values = { fg = colors.light.red[5], bg = colors.light.green[0], nocombine = true, bold = false },
                     },
                     ColorColumn = {
                         class_id = "ColorColumn",
@@ -267,9 +283,17 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.light.gray[7], bg = colors.light.yellow[0], nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.light.red[5], bg = colors.light.yellow[0], nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
                         values = { fg = colors.light.syntax.keyword, bg = colors.light.yellow[0], nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
+                        values = { fg = colors.light.red[5], bg = colors.light.yellow[0], nocombine = true, bold = false },
                     },
                     ColorColumn = {
                         class_id = "ColorColumn",
@@ -389,9 +413,17 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.light.gray[7], bg = colors.light.purple[0], nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.light.red[5], bg = colors.light.purple[0], nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
                         values = { fg = colors.light.syntax.keyword, bg = colors.light.purple[0], nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
+                        values = { fg = colors.light.red[5], bg = colors.light.purple[0], nocombine = true, bold = false },
                     },
                     ColorColumn = {
                         class_id = "ColorColumn",
@@ -513,9 +545,17 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.dark.gray[0], bg = colors.dark.basics.bg, nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.dark.red[3], bg = colors.dark.basics.bg, nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
                         values = { fg = colors.dark.syntax.keyword, bg = colors.dark.basics.bg, nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
+                        values = { fg = colors.dark.red[3], bg = colors.dark.basics.bg, nocombine = true, bold = false },
                     },
                     ColorColumn = {
                         class_id = "ColorColumn",
@@ -635,9 +675,17 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.dark.gray[0], bg = colors.dark.green[6], nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.dark.red[3], bg = colors.dark.green[6], nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
                         values = { fg = colors.dark.syntax.keyword, bg = colors.dark.green[6], nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
+                        values = { fg = colors.dark.red[3], bg = colors.dark.green[6], nocombine = true, bold = false },
                     },
                     ColorColumn = {
                         class_id = "ColorColumn",
@@ -757,9 +805,17 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.dark.gray[0], bg = colors.dark.yellow[6], nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.dark.red[3], bg = colors.dark.yellow[6], nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
                         values = { fg = colors.dark.syntax.keyword, bg = colors.dark.yellow[6], nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
+                        values = { fg = colors.dark.red[3], bg = colors.dark.yellow[6], nocombine = true, bold = false },
                     },
                     ColorColumn = {
                         class_id = "ColorColumn",
@@ -879,9 +935,17 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.dark.gray[0], bg = colors.dark.purple[6], nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.dark.red[3], bg = colors.dark.purple[6], nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
                         values = { fg = colors.dark.syntax.keyword, bg = colors.dark.purple[6], nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
+                        values = { fg = colors.dark.red[3], bg = colors.dark.purple[6], nocombine = true, bold = false },
                     },
                     ColorColumn = {
                         class_id = "ColorColumn",
@@ -1005,9 +1069,17 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.light.gray[4], bg = colors.light.basics.bg, nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.light.gray[4], bg = colors.light.basics.bg, nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
                         values = { fg = colors.light.gray[5], bg = colors.light.basics.bg, nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
+                        values = { fg = colors.light.gray[4], bg = colors.light.basics.bg, nocombine = true, bold = false },
                     },
                     ColorColumn = {
                         class_id = "ColorColumn",
@@ -1127,9 +1199,17 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.light.gray[4], bg = colors.light.basics.bg, nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.light.gray[4], bg = colors.light.basics.bg, nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
                         values = { fg = colors.light.gray[5], bg = colors.light.basics.bg, nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
+                        values = { fg = colors.light.gray[4], bg = colors.light.basics.bg, nocombine = true, bold = false },
                     },
                     ColorColumn = {
                         class_id = "ColorColumn",
@@ -1249,9 +1329,17 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.light.gray[4], bg = colors.light.basics.bg, nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.light.gray[4], bg = colors.light.basics.bg, nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
                         values = { fg = colors.light.gray[5], bg = colors.light.basics.bg, nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
+                        values = { fg = colors.light.gray[4], bg = colors.light.basics.bg, nocombine = true, bold = false },
                     },
                     ColorColumn = {
                         class_id = "ColorColumn",
@@ -1371,9 +1459,17 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.light.gray[4], bg = colors.light.basics.bg, nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.light.gray[4], bg = colors.light.basics.bg, nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
                         values = { fg = colors.light.gray[5], bg = colors.light.basics.bg, nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
+                        values = { fg = colors.light.gray[4], bg = colors.light.basics.bg, nocombine = true, bold = false },
                     },
                     ColorColumn = {
                         class_id = "ColorColumn",
@@ -1495,8 +1591,16 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
+                        values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
                         values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
                     },
                     ColorColumn = {
@@ -1617,8 +1721,16 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
+                        values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
                         values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
                     },
                     ColorColumn = {
@@ -1739,8 +1851,16 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
+                        values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
                         values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
                     },
                     ColorColumn = {
@@ -1861,8 +1981,16 @@ return {
                         class_id = "WinBarFileName",
                         values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
                     },
+                    WinBarFileNameModified = {
+                        class_id = "WinBarFileNameModified",
+                        values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
+                    },
                     WinBarAlert = {
                         class_id = "WinBarAlert",
+                        values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
+                    },
+                    WinBarAlertRed = {
+                        class_id = "WinBarAlertRed",
                         values = { fg = colors.dark.gray[4], bg = colors.dark.basics.bg, nocombine = true, bold = false },
                     },
                     ColorColumn = {
