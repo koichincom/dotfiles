@@ -1,36 +1,36 @@
 local M = {}
 
-local file = require("modules.winbar.components.file")
+local buffer = require("modules.winbar.components.buffer")
 local editor = require("modules.winbar.components.editor")
-local workspace = require("modules.winbar.components.workspace")
+local project = require("modules.winbar.components.project")
 
 local components_map = {
     cwd = {
         state = "",
-        getter = workspace.get_cwd,
+        getter = project.get_cwd,
     },
     diagnostics = {
-        state = "",
-        getter = file.get_diagnostics,
+        state = { errors = 0, warnings = 0 },
+        getter = buffer.get_diagnostics,
     },
     git_branch = {
         state = "",
-        getter = workspace.get_branch,
+        getter = project.get_branch,
     },
     file_path_name = {
         state = {
             path = "",
             name = "",
         },
-        getter = file.get_path_name,
+        getter = buffer.get_path_name,
     },
     encode = {
-        state = "",
-        getter = file.get_encode,
+        state = { text = "", is_alert = false },
+        getter = buffer.get_encode,
     },
     file_mod = {
         state = false,
-        getter = file.get_file_mod,
+        getter = buffer.get_file_mod,
     },
     wrap = {
         state = { text = "", is_alert = false },
@@ -75,60 +75,73 @@ function M.render()
     end
     local cm = components_map
 
-    local center_group = join(" ", {
-        cm.encode.state,
-        cm.diagnostics.state,
-    })
+    local diagnostics_parts = {}
+    if cm.diagnostics.state.errors > 0 then
+        table.insert(diagnostics_parts, "%#WinBarAlertRed#E:" .. cm.diagnostics.state.errors)
+    end
+    if cm.diagnostics.state.warnings > 0 then
+        table.insert(diagnostics_parts, "%#WinBarAlertYellow#W:" .. cm.diagnostics.state.warnings)
+    end
+    local diagnostics_str = join(" ", diagnostics_parts)
 
-    local right_parts = {
-        render_alert_component(cm.copilot.state),
-        render_alert_component(cm.wrap.state),
-        render_alert_component(cm.auto_write.state),
-    }
-    local right_group = join(" ", right_parts)
-
-    local winbar = table.concat({
+    -- Left group: file path + name + diagnostics
+    local left_group = table.concat({
         "%#WinBar#",
-        " ",
-        cm.cwd.state,
-        (cm.cwd.state ~= "" and cm.git_branch.state ~= "") and ":" or "",
-        cm.git_branch.state,
-
-        "%=",
+        "      ",
         cm.file_path_name.state.path,
         (cm.file_path_name.state.path ~= "" and cm.file_path_name.state.name ~= "") and "/" or "",
         cm.file_mod.state and "%#WinBarFileNameModified#" or "%#WinBarFileName#",
-        cm.file_path_name.state.name .. (cm.file_mod.state and "+" or ""),
-        "%#WinBarAlert#",
+        cm.file_path_name.state.name,
+        diagnostics_str ~= "" and " " or "",
+        diagnostics_str,
+    })
 
-        (center_group ~= "") and " " or "",
-        center_group,
+    -- Right group: flags + cwd + git branch
+    local context = table.concat({
+        "%#WinBar#",
+        cm.cwd.state,
+        (cm.cwd.state ~= "" and cm.git_branch.state ~= "") and "@" or "",
+        cm.git_branch.state,
+    })
 
+    local flags = join(" ", {
+        render_alert_component(cm.copilot.state),
+        render_alert_component(cm.wrap.state),
+        render_alert_component(cm.auto_write.state),
+        render_alert_component(cm.encode.state),
+    })
+
+    local right_group = join(" ", { flags, context })
+
+    local winbar = table.concat({
+        left_group,
         "%=",
+        "%#WinBar#",
         right_group,
         right_group ~= "" and " " or "",
     })
     vim.wo.winbar = winbar
 end
 
-local function states_equal(a, b)
-    if type(a) ~= type(b) then
+local function is_states_equal(old, new)
+    if type(old) ~= type(new) then
+        vim.notify("Type mismatch in winbar component state", vim.log.levels.WARN)
         return false
     end
-    if type(a) == "table" then
-        for k, v in pairs(a) do
-            if b[k] ~= v then
+    if type(old) == "table" then
+        for k, v in pairs(old) do
+            if new[k] ~= v then
                 return false
             end
         end
-        for k, v in pairs(b) do
-            if a[k] ~= v then
+        for k, v in pairs(new) do
+            if old[k] ~= v then
                 return false
             end
         end
         return true
     end
-    return a == b
+    return old == new
 end
 
 function M.update_component(component_name, params)
@@ -139,7 +152,7 @@ function M.update_component(component_name, params)
     local state = component_conf.getter(params)
 
     -- Return if the component is unchanged, or state is nil
-    if states_equal(component_conf.state, state) or (state == nil) then
+    if is_states_equal(component_conf.state, state) or (state == nil) then
         return
     end
     component_conf.state = state
