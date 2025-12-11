@@ -13,7 +13,7 @@
     - [x] Branch component initialization
     - [x] file_mod and wrap initialization
     - [x] Core winbar components (path, encoding, file_mod, auto_save, wrap)
-          ：q - [x] Special buffer handling (skip render for buftype ~= "")
+        - [x] Special buffer handling (skip render for buftype ~= "")
     - [x] vim.opt investigation - not applicable for winbar (string-only option, table.concat is optimal)
     - [x] Copilot indicator component (After setting up llm-completion module system)
     - [x] Layout update (Left-Center-Right)
@@ -30,12 +30,15 @@
         - [x] Refactor to single component: merge get_diagnostics() and get_hide() logic to return "" for special buffers
         - [x] Remove diagnostics_hide from components_map
         - [x] Simplify render() to use diagnostics.state directly
+        - [x] Add warning count alongside error count
         - [ ] Fix autocmd triggers: Determine if OptionSet buftype is needed or if BufEnter + DiagnosticChanged is sufficient
     - [x] Finalize the modified indicator component (currently somehow unstable), make sure it shows if the current buffer is modified and not saved
     - [x] Autosave indicator
         - [x] Consider autowriteall and autowrite options interaction, the former is set, the latter is not
     - [x] Edge case when the internal value is changed in the situation where the redering is skipped, and then enter a non-skipped buffer should trigger the re-rendering
     - [x] Don't skip rendering in Oil
+    - [x] Complete redesign of winbar module order and layout
+    - [ ] Dynamic filepath reducer based on window width
 
 ## P2
 
