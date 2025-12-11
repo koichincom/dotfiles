@@ -100,7 +100,7 @@ function M.render()
     local context = table.concat({
         "%#WinBar#",
         cm.cwd.state,
-        (cm.cwd.state ~= "" and cm.git_branch.state ~= "") and "@" or "",
+        (cm.cwd.state ~= "" and cm.git_branch.state ~= "") and " @" or "",
         cm.git_branch.state,
     })
 

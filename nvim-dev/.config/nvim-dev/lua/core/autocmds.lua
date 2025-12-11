@@ -52,10 +52,12 @@ function M.init_general()
 
     vim.api.nvim_create_autocmd("DiagnosticChanged", {
         group = global,
-        callback = function()
-            winbar.update_component("diagnostics", nil)
+        callback = function(args)
+            if args.buf == vim.api.nvim_get_current_buf() then
+                winbar.update_component("diagnostics", nil)
+            end
         end,
-        desc = "Update winbar diagnostics count when diagnostics change",
+        desc = "Update winbar diagnostics count when diagnostics change in the current buffer",
     })
 
     vim.api.nvim_create_autocmd("OptionSet", {
@@ -66,9 +68,7 @@ function M.init_general()
                 return
             end
             winbar.update_component("diagnostics", nil)
-            winbar.update_component("git_branch", nil)
         end,
-        desc = "Update winbar components when buftype changes (special buffers)",
     })
 
     vim.api.nvim_create_autocmd("DirChanged", {

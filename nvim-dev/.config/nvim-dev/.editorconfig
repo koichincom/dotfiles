@@ -1,6 +1,3 @@
 [*.*]
 indent_style = space
 indent_size = 4
-
-[*.lua]
-indent_size = 4

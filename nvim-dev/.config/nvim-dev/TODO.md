@@ -26,19 +26,18 @@
         - [x] Simplify render() to use git_branch.state directly
         - [ ] Fix autocmd triggers for buftype changes: Determine if BufEnter or OptionSet buftype is needed to hide/show branch in special buffers
         - [ ] Fix autocmd triggers for git branch changes: Find reliable way to detect branch changes (currently using FocusGained, but doesn't cover in-Neovim git commands)
-    - [ ] Diagnostics component (implement error count)
+    - [x] Diagnostics component (implement error count)
         - [x] Refactor to single component: merge get_diagnostics() and get_hide() logic to return "" for special buffers
         - [x] Remove diagnostics_hide from components_map
         - [x] Simplify render() to use diagnostics.state directly
         - [x] Add warning count alongside error count
-        - [ ] Fix autocmd triggers: Determine if OptionSet buftype is needed or if BufEnter + DiagnosticChanged is sufficient
+        - [x] Fix autocmd triggers: Determine if OptionSet buftype is needed or if BufEnter + DiagnosticChanged is sufficient
     - [x] Finalize the modified indicator component (currently somehow unstable), make sure it shows if the current buffer is modified and not saved
     - [x] Autosave indicator
         - [x] Consider autowriteall and autowrite options interaction, the former is set, the latter is not
     - [x] Edge case when the internal value is changed in the situation where the redering is skipped, and then enter a non-skipped buffer should trigger the re-rendering
     - [x] Don't skip rendering in Oil
     - [x] Complete redesign of winbar module order and layout
-    - [ ] Dynamic filepath reducer based on window width
 
 ## P2
 
@@ -47,6 +46,8 @@
 - [ ] vim.opt.winbarnc might be refactored the code a lot
 - [ ] LSP keymaps: go to definition, references, etc.
 - [ ] Very hard but try to trigger oil preview when entering
+- [ ] Bugs: diagnostics is not updated when opening term or something
+- [ ] Dynamic filepath reducer based on window width for winbar
 
 ## P3
 
