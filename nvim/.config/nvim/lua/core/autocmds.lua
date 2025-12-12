@@ -1,362 +1,281 @@
---------------------------------------------------------------------------------
--- Auto-reload files changed outside of Neovim (e.g. by coding agents)
---------------------------------------------------------------------------------
+local M = {}
 
-vim.opt.autoread = true -- Set by vim.opt (not always reliable, so set autocmd)
-vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "WinEnter", "BufWinEnter" }, {
-    pattern = { "*" },
-    command = "if mode() != 'c' | checktime | endif",
-    desc = "check for file changes on focus/enter",
-})
+-- Set to nil to make it sharable across this fill
+local highlight, winbar, background, list, wrap, cursor_line, lint, auto_write = nil, nil, nil, nil, nil, nil, nil, nil
 
---------------------------------------------------------------------------------
--- Color column management (updates based on buffer type and background)
---------------------------------------------------------------------------------
-local colorcolumn = vim.api.nvim_create_augroup("ColorColumn", { clear = true })
-local module_colorcolumn = require "modules.colorcolumn"
+-- Create feature-based augroups
+local winbar_group = vim.api.nvim_create_augroup("MyWinbar", { clear = true })
+local highlight_group = vim.api.nvim_create_augroup("MyHighlight", { clear = true })
+local cursorline_group = vim.api.nvim_create_augroup("MyCursorline", { clear = true })
+local background_group = vim.api.nvim_create_augroup("MyBackground", { clear = true })
+local file_sync_group = vim.api.nvim_create_augroup("MyFileSync", { clear = true })
+local list_group = vim.api.nvim_create_augroup("MyList", { clear = true })
+local wrap_group = vim.api.nvim_create_augroup("MyWrap", { clear = true })
+local auto_write_group = vim.api.nvim_create_augroup("MyAutoWrite", { clear = true })
+local lint_group = vim.api.nvim_create_augroup("MyLint", { clear = true })
 
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    group = colorcolumn,
-    callback = function(args)
-        local buftype = vim.bo[args.buf].buftype
-        module_colorcolumn.update_colorcolumn(buftype)
-    end,
-})
+function M.init_general()
+    if winbar == nil then
+        winbar = require("modules.winbar.main")
+    end
+    background = require("modules.background")
+    list = require("modules.list")
+    wrap = require("modules.wrap")
+    cursor_line = require("modules.cursorline")
+    highlight = require("modules.highlight.main")
+    auto_write = require("modules.auto-write")
 
-vim.api.nvim_create_autocmd({ "OptionSet" }, {
-    group = colorcolumn,
-    pattern = "background",
-    callback = function()
-        module_colorcolumn.update_colorcolumn_background()
-    end,
-})
+    -- Highlight group
+    vim.api.nvim_create_autocmd("WinLeave", {
+        group = highlight_group,
+        callback = function()
+            highlight.switch_namespace(false, nil, nil, true)
+        end,
+    })
 
---------------------------------------------------------------------------------
--- Auto-formatting (runs on buffer enter, before write, and after insert mode)
---------------------------------------------------------------------------------
-local formatting = vim.api.nvim_create_augroup("Formatting", { clear = true })
+    vim.api.nvim_create_autocmd("WinEnter", {
+        group = highlight_group,
+        callback = function()
+            highlight.switch_namespace(true, nil, nil, true)
+        end,
+    })
 
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePre", "InsertLeave" }, {
-    group = formatting,
-    callback = function(args)
-        if vim.bo[args.buf].buftype ~= "" then
-            return
-        end
-        require("conform").format {
-            async = false,
-            timeout_ms = 500,
-            lsp_fallback = true,
-        }
-    end,
-})
+    vim.api.nvim_create_autocmd("ModeChanged", {
+        group = highlight_group,
+        pattern = "*:n*",
+        callback = function()
+            highlight.switch_namespace(nil, nil, "normal", true)
+        end,
+    })
 
---------------------------------------------------------------------------------
--- Auto-linting (triggers on write and after insert mode)
---------------------------------------------------------------------------------
-local linting = vim.api.nvim_create_augroup("Linting", { clear = true })
+    vim.api.nvim_create_autocmd("ModeChanged", {
+        group = highlight_group,
+        pattern = "*:i*",
+        callback = function()
+            highlight.switch_namespace(nil, nil, "insert", true)
+        end,
+    })
 
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
-    group = linting,
-    callback = function(args)
-        if vim.bo[args.buf].buftype ~= "" then
-            return
-        end
-        require("lint").try_lint()
-    end,
-})
+    vim.api.nvim_create_autocmd("ModeChanged", {
+        group = highlight_group,
+        pattern = { "*:v*", "*:V*", "*:\22*", "*:R" },
+        callback = function()
+            highlight.switch_namespace(nil, nil, "visual", true)
+        end,
+    })
 
---------------------------------------------------------------------------------
--- Auto-save (triggers on insert leave and buffer leave)
---------------------------------------------------------------------------------
-local auto_save = vim.api.nvim_create_augroup("AutoWrite", { clear = true })
-local module_auto_save = require "modules.auto-save"
+    vim.api.nvim_create_autocmd("ModeChanged", {
+        group = highlight_group,
+        pattern = "*:c*",
+        callback = function()
+            highlight.switch_namespace(nil, nil, "command", true)
+        end,
+    })
 
-vim.api.nvim_create_autocmd({ "InsertLeave" }, {
-    group = auto_save,
-    callback = function(args)
-        if vim.bo[args.buf].buftype ~= "" then
-            return
-        end
-        module_auto_save.execute_save()
-    end,
-})
+    -- Cursorline group
+    vim.api.nvim_create_autocmd("WinLeave", {
+        group = cursorline_group,
+        callback = function()
+            cursor_line.turn_off()
+        end,
+    })
 
-vim.api.nvim_create_autocmd({ "BufLeave" }, {
-    group = auto_save,
-    callback = function(args)
-        if vim.bo[args.buf].buftype ~= "" then
-            return
-        end
-        module_auto_save.execute_save()
-    end,
-})
+    vim.api.nvim_create_autocmd("WinEnter", {
+        group = cursorline_group,
+        callback = function()
+            cursor_line.turn_on()
+        end,
+    })
 
---------------------------------------------------------------------------------
--- Color scheme management (updates when background changes)
---------------------------------------------------------------------------------
-local color_scheme = vim.api.nvim_create_augroup("ColorScheme", { clear = true })
-local module_colorscheme = require "modules.colorscheme"
+    -- Background group
+    vim.api.nvim_create_autocmd("FocusGained", {
+        group = background_group,
+        callback = function()
+            background.update()
+        end,
+        desc = "Should be prioritized to reduce the flash",
+    })
 
--- Update colorscheme when background changes (light/dark)
-vim.api.nvim_create_autocmd({ "OptionSet" }, {
-    group = color_scheme,
-    pattern = "background",
-    callback = function()
-        module_colorscheme.update_colorscheme(false)
-    end,
-})
+    -- FileSync group
+    vim.api.nvim_create_autocmd("FocusGained", {
+        group = file_sync_group,
+        callback = function()
+            vim.cmd("checktime")
+        end,
+    })
 
---------------------------------------------------------------------------------
--- Line number display management (switches between relative and absolute based on mode)
---------------------------------------------------------------------------------
-local line_number = vim.api.nvim_create_augroup("LineNumber", { clear = true })
-local module_line_number = require "modules.line-numbers"
+    -- List group
+    vim.api.nvim_create_autocmd("BufReadPost", {
+        group = list_group,
+        callback = function()
+            list.update_leadmultispace()
+        end,
+    })
 
-local force_normal_line_number = false
-vim.api.nvim_create_autocmd("WinLeave", {
-    group = line_number,
-    callback = function(args)
-        -- When leaving telescope with 'insert' and enter another window,
-        -- the mode is still 'insert' when 'WinEnter' is triggered.
-        -- So, we set 'force_normal' to true here, and handle it in 'WinEnter'.
-        -- Telescope will automatically enter 'normal' mode with delay
-        if vim.bo[args.buf].filetype == "TelescopePrompt" then
-            force_normal_line_number = true
-        else
-            module_line_number.set_inactive_line_number_highlight()
-        end
-    end,
-})
+    vim.api.nvim_create_autocmd("OptionSet", {
+        pattern = "shiftwidth",
+        group = list_group,
+        callback = function()
+            list.update_leadmultispace()
+        end,
+    })
 
-vim.api.nvim_create_autocmd("WinEnter", {
-    group = line_number,
-    callback = function()
-        local mode
-        if force_normal_line_number then
-            mode = "normal"
-            force_normal_line_number = false
-        else
-            mode = require("modules.modes").get_normalized_mode()
-        end
-        module_line_number.set_active_line_number_highlight(false, mode)
-    end,
-})
+    -- Wrap group
+    vim.api.nvim_create_autocmd("BufEnter", {
+        group = wrap_group,
+        callback = function(args)
+            -- Force update wrap on buffer enter
+            wrap.update(vim.bo[args.buf].filetype)
+        end,
+    })
 
-vim.api.nvim_create_autocmd({ "OptionSet" }, {
-    pattern = "background",
-    group = line_number,
-    callback = function()
-        local mode = require("modules.modes").get_normalized_mode()
-        module_line_number.set_inactive_line_number_highlight()
-        module_line_number.set_active_line_number_highlight(false, mode)
-    end,
-})
+    -- AutoWrite group
+    vim.api.nvim_create_autocmd("OptionSet", {
+        group = auto_write_group,
+        pattern = { "hidden" },
+        callback = function()
+            auto_write.update_hidden()
+        end,
+    })
 
-vim.api.nvim_create_autocmd({ "ModeChanged" }, {
-    group = line_number,
-    callback = function()
-        local mode = require("modules.modes").get_normalized_mode()
-        module_line_number.set_active_line_number_highlight(false, mode)
-    end,
-})
+    vim.api.nvim_create_autocmd("OptionSet", {
+        group = auto_write_group,
+        pattern = { "autowrite", "autowriteall" },
+        callback = function()
+            auto_write.update_status()
+        end,
+    })
 
---------------------------------------------------------------------------------
--- Cursor line management (highlights current line in active window only)
---------------------------------------------------------------------------------
-local cursor_line = vim.api.nvim_create_augroup("CursorLine", { clear = true })
-local module_cursor_line = require "modules.cursor-line"
+    vim.api.nvim_create_autocmd("FocusLost", {
+        group = auto_write_group,
+        nested = true,
+        callback = function()
+            auto_write.write()
+        end,
+        desc = "Autosave on focus lost for external tools like OpenCode, Claude Code",
+    })
 
-vim.api.nvim_create_autocmd({ "OptionSet" }, {
-    group = cursor_line,
-    pattern = "background",
-    callback = function()
-        module_cursor_line.update_cursorline(false)
-    end,
-})
+    vim.api.nvim_create_autocmd("VimEnter", {
+        group = auto_write_group,
+        callback = function()
+            auto_write.update_status()
+        end,
+    })
 
-vim.api.nvim_create_autocmd("WinEnter", {
-    group = cursor_line,
-    callback = function()
-        module_cursor_line.cursorline_on()
-    end,
-})
+    -- Winbar group
+    vim.api.nvim_create_autocmd({ "BufEnter", "BufFilePost" }, {
+        group = winbar_group,
+        callback = function()
+            winbar.update_component("file_path_name", nil)
+        end,
+        desc = "Update winbar file path and name when entering buffer",
+    })
 
-vim.api.nvim_create_autocmd("WinLeave", {
-    group = cursor_line,
-    callback = function()
-        module_cursor_line.cursorline_off()
-    end,
-})
+    vim.api.nvim_create_autocmd({ "BufEnter" }, {
+        group = winbar_group,
+        callback = function()
+            winbar.update_component("encode", nil)
+        end,
+        desc = "Update winbar file encoding when entering buffer",
+    })
 
---------------------------------------------------------------------------------
--- Winbar management (file path, git branch, and status indicators)
---------------------------------------------------------------------------------
-local win_bar = vim.api.nvim_create_augroup("WinBar", { clear = true })
-local module_win_bar = require "modules.win-bar"
+    vim.api.nvim_create_autocmd("OptionSet", {
+        group = winbar_group,
+        pattern = "fileencoding",
+        callback = function()
+            winbar.update_component("encode", nil)
+        end,
+        desc = "Update winbar file encoding when fileencoding option changes",
+    })
 
--- Detect git branch changes from external commands (e.g., terminal git checkout)
-vim.api.nvim_create_autocmd("User", {
-    group = win_bar,
-    pattern = "GitsignsHeadChange",
-    callback = function(args)
-        if vim.bo[args.buf].buftype ~= "" then
-            module_win_bar.set_git_branch(false, false)
-        else
-            module_win_bar.set_git_branch(false, true)
-        end
-    end,
-})
+    vim.api.nvim_create_autocmd("BufModifiedSet", {
+        group = winbar_group,
+        callback = function()
+            winbar.update_component("file_mod", nil)
+        end,
+        desc = "Update winbar modification indicator when buffer modified state changes",
+    })
 
--- Update git branch when navigating directories in oil.nvim
-vim.api.nvim_create_autocmd("User", {
-    group = win_bar,
-    pattern = "OilEnter",
-    callback = function(args)
-        -- Get the current directory in the oil buffer
-        local dir = require("oil").get_current_dir(args.data.buf)
-        if dir then
-            -- Initialize and update the git branch for the new directory
-            -- Set is_init_from_gitsigns=true to allow updates even when starting with oil
-            module_win_bar.set_git_branch(true, true)
-        end
-    end,
-})
-
-vim.api.nvim_create_autocmd({ "BufEnter", "BufFilePost", "DirChanged" }, {
-    group = win_bar,
-    callback = function(args)
-        if vim.bo[args.buf].buftype ~= "" then
-            return
-        end
-        module_win_bar.set_file_path_name()
-    end,
-})
-
-vim.api.nvim_create_autocmd("BufEnter", {
-    group = win_bar,
-    callback = function(args)
-        if vim.bo[args.buf].buftype ~= "" then
-            return
-        end
-        module_win_bar.set_encode_status()
-    end,
-})
-
--- Detect file encoding changes (e.g., :set fileencoding=utf-8)
-vim.api.nvim_create_autocmd("OptionSet", {
-    group = win_bar,
-    pattern = "fileencoding",
-    callback = function(args)
-        if vim.bo[args.buf].buftype ~= "" then
-            return
-        end
-        module_win_bar.set_encode_status()
-    end,
-})
-
-vim.api.nvim_create_autocmd({ "BufEnter", "BufModifiedSet", "FileChangedShellPost" }, {
-    group = win_bar,
-    callback = function(args)
-        if vim.bo[args.buf].buftype ~= "" then
-            return
-        end
-        module_win_bar.set_file_modified_status()
-    end,
-})
-
-local force_normal_win_bar = false
-vim.api.nvim_create_autocmd("WinLeave", {
-    group = win_bar,
-    callback = function(args)
-        -- When leaving telescope with 'insert' and enter another window,
-        -- the mode is still 'insert' when 'WinEnter' is triggered.
-        -- So, we set 'force_normal' to true here, and handle it in 'WinEnter'.
-        -- Telescope will automatically enter 'normal' mode with delay
-        if vim.bo[args.buf].filetype == "TelescopePrompt" then
-            force_normal_win_bar = true
-        else
-            module_win_bar.set_inactive_winbar_highlight()
-        end
-    end,
-})
-
-vim.api.nvim_create_autocmd("WinEnter", {
-    group = win_bar,
-    callback = function()
-        local mode
-        if force_normal_win_bar then
-            mode = "normal"
-            force_normal_win_bar = false
-        else
-            mode = require("modules.modes").get_normalized_mode()
-        end
-        module_win_bar.set_active_winbar_highlight(false, mode)
-    end,
-})
-
-vim.api.nvim_create_autocmd({ "OptionSet" }, {
-    pattern = "background",
-    group = win_bar,
-    callback = function()
-        local mode = require("modules.modes").get_normalized_mode()
-        module_win_bar.set_inactive_winbar_highlight()
-        module_win_bar.set_active_winbar_highlight(false, mode)
-    end,
-})
-
-vim.api.nvim_create_autocmd({ "ModeChanged" }, {
-    group = win_bar,
-    callback = function()
-        local mode = require("modules.modes").get_normalized_mode()
-        module_win_bar.set_active_winbar_highlight(false, mode)
-    end,
-})
-
-vim.api.nvim_create_autocmd("WinEnter", {
-    group = win_bar,
-    pattern = "copilot-*",
-    callback = function()
-        module_win_bar.set_win_bar(false)
-    end,
-})
-
---------------------------------------------------------------------------------
--- Wrap management (enables text wrapping for markdown, text, and tex files)
---------------------------------------------------------------------------------
-local wrap = vim.api.nvim_create_augroup("Wrap", { clear = true })
-local module_wrap = require "modules.wrap"
-
-vim.api.nvim_create_autocmd("BufEnter", {
-    group = wrap,
-    callback = function(args)
-        if vim.bo[args.buf].buftype ~= "" then
-            return
-        end
-        local name = vim.api.nvim_buf_get_name(args.buf)
-        local ext = vim.fn.fnamemodify(name, ":e")
-        if ext == "md" or ext == "txt" or ext == "tex" then
-            if not vim.g.wrap_enabled then
-                module_wrap.wrap_on()
+    vim.api.nvim_create_autocmd("DiagnosticChanged", {
+        group = winbar_group,
+        callback = function(args)
+            -- Don't update if the diagnostics change is not for the current buffer
+            if args.buf == vim.api.nvim_get_current_buf() then
+                winbar.update_component("diagnostics", nil)
             end
-        else
-            if vim.g.wrap_enabled then
-                module_wrap.wrap_off()
-            end
-        end
-    end,
-})
+        end,
+    })
 
---------------------------------------------------------------------------------
--- List characters management (updates leadmultispace when shiftwidth changes)
---------------------------------------------------------------------------------
-local list_chars = vim.api.nvim_create_augroup("ListChars", { clear = true })
-local module_list = require "modules.list"
+    -- OptirnSet with buftype might be optimal, but seems unreliable with plugins like Oil here
+    -- Checking the buftype might also be ideal, but it's very unstable for Oil and terminal buffers somehow
+    vim.api.nvim_create_autocmd({ "BufEnter", "TermOpen" }, {
+        group = winbar_group,
+        callback = function()
+            winbar.update_component("diagnostics", nil)
+        end,
+    })
 
-vim.api.nvim_create_autocmd("OptionSet", {
-    group = list_chars,
-    pattern = "shiftwidth",
-    callback = function()
-        vim.notify "test"
-        module_list.update_leadmultispace()
-    end,
-})
+    vim.api.nvim_create_autocmd("DirChanged", {
+        group = winbar_group,
+        callback = function()
+            winbar.update_component("cwd", nil)
+        end,
+        desc = "Update winbar current working directory indicator",
+    })
+
+    vim.api.nvim_create_autocmd("VimEnter", {
+        group = winbar_group,
+        callback = function()
+            winbar.update_component("cwd", nil)
+        end,
+        desc = "Initialize winbar cwd component on Vim start",
+    })
+
+    vim.api.nvim_create_autocmd("BufEnter", {
+        group = winbar_group,
+        callback = function()
+            winbar.render()
+        end,
+        desc = "Render winbar on buffer enter in case internal values changed",
+    })
+end
+
+function M.init_gitsigns()
+    winbar = require("modules.winbar.main")
+
+    vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "BufEnter" }, {
+        group = winbar_group,
+        callback = function()
+            winbar.update_component("git_branch", true)
+        end,
+        desc = "FocusGained and TermClose for external and internal git branch "
+            .. "changes respectively, and BufEnter for different repo entries",
+    })
+end
+
+function M.init_lint()
+    lint = require("modules.lint")
+
+    vim.api.nvim_create_autocmd("BufEnter", {
+        group = lint_group,
+        callback = function()
+            lint.main("BufEnter")
+        end,
+    })
+
+    vim.api.nvim_create_autocmd("BufWritePost", {
+        group = lint_group,
+        callback = function()
+            lint.main("BufWritePost")
+        end,
+    })
+
+    vim.api.nvim_create_autocmd("InsertLeave", {
+        group = lint_group,
+        callback = function()
+            lint.main("InsertLeave")
+        end,
+    })
+end
+
+return M

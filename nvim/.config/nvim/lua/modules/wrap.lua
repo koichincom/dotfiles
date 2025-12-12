@@ -1,38 +1,44 @@
 local M = {}
 
-local winbar = require "modules.win-bar"
+local winbar = require("modules.winbar.main")
+local last_wrap_status = nil
 
-function M.wrap_on()
+local function wrap_on()
     vim.wo.wrap = true
-    vim.g.wrap_enabled = true
-    winbar.set_wrap_status(true)
+    last_wrap_status = true
+    winbar.update_component("wrap", true)
 end
 
-function M.wrap_off()
+local function wrap_off()
     vim.wo.wrap = false
-    vim.g.wrap_enabled = false
-    winbar.set_wrap_status(false)
+    last_wrap_status = false
+    winbar.update_component("wrap", false)
 end
 
-local function toggle_wrap()
-    if vim.g.wrap_enabled then
-        M.wrap_off()
+function M.update(filetype)
+    local wrap_filetype = {
+        text = true,
+        txt = true,
+        markdown = true,
+        gitcommit = true,
+    }
+    if wrap_filetype[filetype] then
+        wrap_on()
     else
-        M.wrap_on()
+        wrap_off()
     end
 end
 
-local function initialize_wrap()
-    vim.o.wrap = false -- Disable wrap by default
-    vim.o.linebreak = true -- Wrap lines at convenient points (always true)
-    if vim.fn.expand "%:e" == "txt" or vim.fn.expand "%:e" == "md" then
-        M.wrap_on()
+local function toggle()
+    if last_wrap_status then
+        wrap_off()
+    elseif not last_wrap_status then
+        wrap_on()
     else
-        M.wrap_off()
+        vim.notify("Error toggling Wrap", vim.log.levels.ERROR)
     end
 end
-initialize_wrap()
 
-vim.keymap.set("n", "<leader>tw", toggle_wrap, { desc = "Toggle Wrap" })
+vim.keymap.set("n", "<leader>tw", toggle, { desc = "Toggle Wrap" })
 
 return M

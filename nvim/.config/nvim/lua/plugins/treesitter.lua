@@ -1,9 +1,8 @@
--- Official Treesitter plugin configuration for Neovim
 return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate", -- Automatically update parsers on plugin update
     config = function()
-        require("nvim-treesitter.configs").setup {
+        require("nvim-treesitter.configs").setup({
             ensure_installed = {
                 "astro",
                 "bash",
@@ -11,10 +10,10 @@ return {
                 "cpp",
                 "csv",
                 "css",
+                "glsl",
                 "html",
                 "javascript",
                 "json",
-                "jsonc",
                 "lua",
                 "markdown",
                 "python",
@@ -24,11 +23,14 @@ return {
                 "typescript",
                 "tsv",
                 "yaml",
-                "svelte",
+                "toml",
+                "xml",
+                "r",
+                "markdown_inline",
             },
             highlight = {
                 enable = true,
             },
-        }
+        })
     end,
 }

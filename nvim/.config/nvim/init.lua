@@ -1,59 +1,11 @@
-vim.loader.enable()
--- Core
-require "core.options"
-require "core.keymaps"
-require "core.autocmds"
+vim.loader.enable(true) -- Compile Lua to bytecode for faster startup
 
--- Modules
-local modules = {
-    "lazy",
-    "init-modules",
-    "auto-save",
-    "colorscheme",
-    "cursor-line",
-    "win-bar",
-    "theme-os",
-    "line-numbers",
-    "modes",
-    "color-palette",
-    "theme-highlight",
-    "wrap",
-    "namespaces",
-    "list",
-}
-for _, module in ipairs(modules) do
-    require("modules." .. module)
-end
+require("core.options")
+require("core.lazy") -- After loading options
 
--- Plugins with Lazy.nvim
-local plugins = {
-    "autopairs",
-    "colorscheme",
-    "comment",
-    "completion",
-    "copilot",
-    "count",
-    "oil",
-    "formatting",
-    "fuzzy-finder",
-    "gitsigns",
-    "linting",
-    "lspconfig",
-    "mason",
-    "noice",
-    "surround",
-    "treesitter",
-    "dial",
-    "discord",
-    "file-tree",
-    "kanagawa",
-}
-local plugin_specs = {}
-for _, plugin in ipairs(plugins) do
-    table.insert(plugin_specs, require("plugins." .. plugin))
-end
-require("modules.lazy").setup(plugin_specs)
+require("modules.colorscheme").init() -- After loading colorscheme plugins
+require("modules.highlight.main").init() -- After loading colorscheme module
 
--- After everything is loaded
-require("modules.init-modules").initialize_modules()
-require "modules.lsp"
+-- No strict dependencies
+require("core.autocmds").init_general()
+require("core.keymaps")

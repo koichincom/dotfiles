@@ -1,4 +1,3 @@
--- command line integration user interface
 return {
     "folke/noice.nvim",
     event = "VeryLazy",
@@ -6,7 +5,5 @@ return {
         "MunifTanjim/nui.nvim",
         "rcarriga/nvim-notify",
     },
-    config = function()
-        require("noice").setup {}
-    end,
+    opts = {},
 }

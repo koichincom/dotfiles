@@ -1,53 +1,93 @@
 # Todo
 
-## Features
+## P0
 
-- [ ] Feature: select inside '%==%' with 'vam' and 'vim' keymaps like 'vap' and 'vip' for paragraphs
-- [ ] Feature: LSP-related keymaps, such as go to definition, reference etc.
-- [ ] Feature: configure diagnostics appearance in options.lua
-- [ ] Feature: check quick fix, jumplist, vim marks features and configure them
-- [ ] Improvement: Add word count feature in winbar in markdown files
-- [ ] Learn: how to use nvim-surround, that's the only plugin I don't know how to use yet in my setup
+## P1
 
-## Performance Optimizations (from AI discussion)
+- [ ] Configure Opencode.nvim: whether to have the screen inside neovim or outside
+    - [ ] Before sending any lines, I should format and save the buffer first
 
-### High Impact (50-200ms per operation)
+## P2
 
-- [ ] **#2: Async git operations** - Replace blocking `io.popen()` in win-bar.lua:47-58 with `vim.uv.spawn()`
-  - Current: Synchronous git calls block Neovim on every Oil buffer navigation
-  - Impact: 50-200ms saved per Oil navigation (1000x more than debouncing)
-  - Complexity: Medium (async callbacks, error handling)
+- [ ] Implement debounce/throttle/schedule for winbar updates
+- [ ] Batch nvim_set_hl calls in highlight system to minimize performance impact
+- [ ] vim.opt.winbarnc might be refactored the code a lot
+- [ ] LSP keymaps: go to definition, references, etc.
+- [ ] Very hard but try to trigger oil preview when entering
+- [ ] Bugs: diagnostics is not updated when opening term or something
+- [ ] Dynamic filepath reducer based on window width for winbar
 
-### Medium Impact (5-10ms per edit + huge memory savings)
+## P3
 
-- [ ] **#1: Reduce format/lint triggers** - Remove InsertLeave from autocmds.lua:39, 58
-  - Current: Formatting on BufEnter, BufWritePre, AND InsertLeave (too aggressive)
-  - Current: Linting on BufEnter, BufWritePost, AND InsertLeave (too aggressive)
-  - Recommendation: Only format/lint on save (BufWritePre + BufWritePost)
-  - Impact: 5-10ms per edit + 60-150MB less memory churn per session
-  - Complexity: Low (just remove InsertLeave from event arrays)
+- [ ] Consider fff.nvim super fast file searcher
+- [ ] Configure scratch (oil preview) to the list (4 spaces indent or completely remove them)
+- [ ] Configure preset.lua (currently AI generated)
+- [ ] Winbar: word count in markdown files (after count.nvim is completed)
+- [ ] Learn: schedule and wrap to safely execute autocmd callbacks in Neovim
+- [ ] Learn: quickfix, jumplist, vim marks
+- [ ] Learn: nvim-surround usage
+- [ ] Search harpoon
 
-### Small Impact (startup time)
+## Done
 
-- [ ] **#4: Lazy load more plugins** - Audit plugin loading in init.lua
-  - Impact: 10-50ms faster startup
-  - Complexity: Low (add `lazy = true` + triggers)
-
-- [ ] **#5: Cache theme-os checks** - Add caching to theme-os.lua:6
-  - Current: `io.popen "defaults read -g AppleInterfaceStyle"` may run frequently
-  - Solution: Cache result, only re-check on specific trigger
-  - Impact: Depends on call frequency
-  - Complexity: Low (simple cache variable)
-
-### Review Tasks
-
-- [ ] **General autocmd review** - Review all autocmds in autocmds.lua for optimization opportunities
-  - Check for redundant triggers
-  - Look for patterns that could be consolidated
-  - Identify expensive operations on high-frequency events
-
-## Completed Optimizations
-
-- [x] **#7**: Simplified module loading (loop-based in init.lua)
-- [x] **#6**: Created theme-highlight.lua utility (eliminated ~129 lines of boilerplate)
-- [x] **#3**: Winbar debouncing with vim.schedule() (~0.02ms per BufEnter, but architecturally correct)
+- [x] New way of triggering linting and formatting
+    - [x] Formating trigger update
+    - [x] Linting trigger update
+- [x] Learn: autoread and how to reload files from outside changes (e.g., Claude Code) Implemented via vim.o.autoread and FocusGained autocmd
+- [x] Autosave adjustments for external tools like Opencode, Claude Code
+- [x] I may need to set up global namespace for fallback on startup (reference: https://opencode.ai/s/QzY5hMnO)
+- [x] Reconsider autowrite system given i found vim.o.autowriteall
+    - [x] Refactor autowrite logic with vim.o.autowriteall and related (now everything is changed!)
+    - [x] Remove the custom auto-save component logic
+- [x] Update highlight presets for light mode especially
+- [x] Organize the plugin files by changing the names and separating by one plugin per file
+- [x] Only use copilot.vim, not supermaven
+- [x] Add modes highlight namespaces for each category (2 _ 2 _ 4 namespaces)
+- [x] Add winbar specific values for the highlight presets
+- [x] Integrate highlight namespace system endpoints
+    - [x] Update ModeChanged autocmds (4 patterns: n/i/v/c) to call switch_namespace(nil, nil, mode, true) where mode is "normal"/"insert"/"visual"/"command"
+    - [x] Update WinEnter/WinLeave autocmds to use new 4-param API: switch_namespace(is_active, nil, nil, true) where is_active is true/false
+    - [x] Update background.lua theme switching to call switch_namespace(nil, is_light, nil, false) where is_light matches theme
+    - [x] Add TabEnter autocmd to sync all windows in new tab: switch_namespace(nil, nil, nil, true, true) with force_update
+- [x] Add Kanagawa.nvim theme support (but unused)
+- [x] Add nvim-colorizer to highlight code
+- [x] List module: dynamic shiftwidth and leadmultispace updates
+    - [x] Initialize shiftwidth per filetype (e.g., Lua=2, Python=4) on BufEnter/FileType
+    - [x] Update leadmultispace on OptionSet shiftwidth (runtime adaptation)
+- [x] Fix highlight namespace not applied at startup (lua/modules/highlight/main.lua:40-56)
+    - Issue: M.init() calls load_namespace() but never calls nvim_win_set_hl_ns() to apply it
+    - Result: Github-theme colors show on startup until first mode change (e.g., entering insert mode)
+    - Solution: Replaced load_namespace() call with M.switch_namespace() to both load and apply
+    - Implementation: M.switch_namespace(true, is_light, "normal", false) to handle edge case of multiple windows at startup
+- [x] Winbar module system major update
+    - [x] Init order issue
+    - [x] branch's component_map: combine the 3 separated ones
+    - [x] fix the status components integration (probably need to look into the each module)
+    - [x] Branch component initialization
+    - [x] file_mod and wrap initialization
+    - [x] Core winbar components (path, encoding, file_mod, auto_save, wrap)
+        - [x] Special buffer handling (skip render for buftype ~= "")
+    - [x] vim.opt investigation - not applicable for winbar (string-only option, table.concat is optimal)
+    - [x] Copilot indicator component (After setting up llm-completion module system)
+    - [x] Layout update (Left-Center-Right)
+    - [x] Exception-based status logic (!Save, !AI, Wrap)
+    - [x] Visual update (Dot for modified, specific icons)
+    - [x] CWD indicator component (implement logic)
+    - [x] Git branch component (fix gitsigns integration)
+        - [x] Refactor to single component: merge get_branch() and get_hide() logic to return "" for special buffers
+        - [x] Remove git_branch_hide and git_branch_display from components_map
+        - [x] Simplify render() to use git_branch.state directly
+        - [x] Fix autocmd triggers
+    - [x] Diagnostics component (implement error count)
+        - [x] Refactor to single component: merge get_diagnostics() and get_hide() logic to return "" for special buffers
+        - [x] Remove diagnostics_hide from components_map
+        - [x] Simplify render() to use diagnostics.state directly
+        - [x] Add warning count alongside error count
+        - [x] Fix autocmd triggers
+    - [x] Finalize the modified indicator component (currently somehow unstable), make sure it shows if the current buffer is modified and not saved
+    - [x] Autosave indicator
+        - [x] Consider autowriteall and autowrite options interaction, the former is set, the latter is not
+    - [x] Edge case when the internal value is changed in the situation where the redering is skipped, and then enter a non-skipped buffer should trigger the re-rendering
+    - [x] Don't skip rendering in Oil
+    - [x] Complete redesign of winbar module order and layout
+- [x] Organize the autocmds with group names, and consider the order of the autocmds

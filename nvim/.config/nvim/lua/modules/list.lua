@@ -1,23 +1,13 @@
 local M = {}
 
-vim.opt.list = true
-vim.opt.listchars = {
-  tab = ">·",
-  space = "·",
-  trail = "+",
-  extends = "»",
-  precedes = "«",
-}
-
 function M.update_leadmultispace()
-  local shiftwidth = vim.o.shiftwidth
-  local leadmultispace = "│"
-  for _ = 1, (shiftwidth - 1) do
-    leadmultispace = leadmultispace .. "·"
-  end
-  vim.opt.listchars:append { leadmultispace = leadmultispace }
+    local shiftwidth = vim.bo.shiftwidth
+    vim.notify("Updating leadmultispace to shiftwidth: " .. shiftwidth, vim.log.levels.DEBUG)
+    local leadmultispace = "┃"
+    for _ = 1, (shiftwidth - 1) do -- (-1) since the first '│' is already added
+        leadmultispace = leadmultispace .. " "
+    end
+    vim.opt.listchars:append({ leadmultispace = leadmultispace })
 end
-
-M.update_leadmultispace()
 
 return M

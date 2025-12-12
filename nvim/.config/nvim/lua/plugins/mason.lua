@@ -1,4 +1,4 @@
--- Package manager for LSP servers, formatters, and linters
+-- Mason: LSP/formatter/linter tool installer
 return {
     "mason-org/mason.nvim",
     opts = {},
@@ -7,12 +7,13 @@ return {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
     config = function()
-        local mason = require "mason"
-        local mason_lspconfig = require "mason-lspconfig"
-        local mason_tool_installer = require "mason-tool-installer"
+        local mason = require("mason")
+        local mason_lspconfig = require("mason-lspconfig")
+        local mason_tool_installer = require("mason-tool-installer")
+
         mason.setup()
 
-        mason_lspconfig.setup {
+        mason_lspconfig.setup({
             ensure_installed = {
                 "clangd",
                 "cssls",
@@ -22,22 +23,24 @@ return {
                 "pyright",
                 "stylua",
                 "ts_ls",
+                "astro",
+                "glsl_analyzer",
             },
-            mason_tool_installer.setup {
-                ensure_installed = {
-                    "ruff",
-                    "clang-format",
-                    "markdownlint",
-                    "prettier",
-                    "stylua",
-                    "cpplint",
-                    "eslint_d",
-                    "jsonlint",
-                    "luacheck",
-                    "stylelint",
-                },
-                run_on_start = true,
+        })
+
+        mason_tool_installer.setup({
+            ensure_installed = {
+                "ruff",
+                "clang-format",
+                "markdownlint",
+                "prettier",
+                "stylua",
+                "eslint_d",
+                "jsonlint",
+                "luacheck",
+                "stylelint",
             },
-        }
+            run_on_start = true,
+        })
     end,
 }

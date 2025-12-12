@@ -125,7 +125,6 @@ end
 
 local function is_states_equal(old, new)
     if type(old) ~= type(new) then
-        vim.notify("Type mismatch in winbar component state", vim.log.levels.WARN)
         return false
     end
     if type(old) == "table" then
