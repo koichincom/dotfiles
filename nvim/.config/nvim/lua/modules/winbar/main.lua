@@ -87,7 +87,6 @@ function M.render()
     -- Left group: file path + name + diagnostics
     local left_group = table.concat({
         "%#WinBar#",
-        "      ",
         cm.file_path_name.state.path,
         (cm.file_path_name.state.path ~= "" and cm.file_path_name.state.name ~= "") and "/" or "",
         cm.file_mod.state and "%#WinBarFileNameModified#" or "%#WinBarFileName#",
@@ -100,7 +99,7 @@ function M.render()
     local context = table.concat({
         "%#WinBar#",
         cm.cwd.state,
-        (cm.cwd.state ~= "" and cm.git_branch.state ~= "") and " @" or "",
+        (cm.cwd.state ~= "" and cm.git_branch.state ~= "") and ":" or "",
         cm.git_branch.state,
     })
 
@@ -114,6 +113,7 @@ function M.render()
     local right_group = join(" ", { flags, context })
 
     local winbar = table.concat({
+        left_group ~= "" and " " or "",
         left_group,
         "%=",
         "%#WinBar#",
