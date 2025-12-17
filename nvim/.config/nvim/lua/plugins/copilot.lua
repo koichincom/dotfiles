@@ -20,7 +20,7 @@ return {
         vim.keymap.del("i", "<C-]>") -- Dismiss the current suggestion
         vim.keymap.del("i", "<M-\\>") -- Explicity request a suggestion
 
-        local winbar = require "modules.winbar.main"
+        local winbar = require("modules.winbar.main")
 
         local function update_copilot_status()
             local is_enabled = vim.fn["copilot#Enabled"]() == 1
@@ -39,9 +39,9 @@ return {
         local function toggle()
             local is_enabled = vim.fn["copilot#Enabled"]() == 1
             if is_enabled then
-                vim.cmd "Copilot disable"
+                vim.cmd("Copilot disable")
             else
-                vim.cmd "Copilot enable"
+                vim.cmd("Copilot enable")
             end
             update_copilot_status()
         end
