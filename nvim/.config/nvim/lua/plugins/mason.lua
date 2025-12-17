@@ -25,6 +25,7 @@ return {
                 "ts_ls",
                 "astro",
                 "glsl_analyzer",
+                "zls",
             },
         })
 

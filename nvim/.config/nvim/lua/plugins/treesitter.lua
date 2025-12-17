@@ -27,6 +27,7 @@ return {
                 "xml",
                 "r",
                 "markdown_inline",
+                "zig",
             },
             highlight = {
                 enable = true,
