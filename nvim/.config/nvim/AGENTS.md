@@ -24,4 +24,5 @@
 - Winbar: `lua/modules/winbar/` uses components. Update via `winbar.update_component(name, params)`.
 - Autocmds: define in `core/autocmds.lua` with `init_*()` functions.
 - Copilot: config at `lua/plugins/copilot.lua` — accept key `<C-J>`; keep integration minimal.
+- fff.nvim: Fast file finder config at `lua/plugins/fff.lua` — see `FFF_GUIDE.md` for usage.
 - Cursor/Copilot rules: none found (no `.cursor/rules/`, `.cursorrules`, or `.github/copilot-instructions.md`).
