@@ -9,6 +9,10 @@
           "limit": {
             "context": 1048576,
             "output": 65535
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
           }
         },
         "gemini-3-pro-low": {
@@ -16,6 +20,21 @@
           "limit": {
             "context": 1048576,
             "output": 65535
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          }
+        },
+        "gemini-3-flash": {
+          "name": "Gemini 3 Flash (Antigravity)",
+          "limit": {
+            "context": 1048576,
+            "output": 65536
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
           }
         },
         "claude-sonnet-4-5": {
@@ -23,6 +42,10 @@
           "limit": {
             "context": 200000,
             "output": 64000
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
           }
         },
         "claude-sonnet-4-5-thinking": {
@@ -30,6 +53,10 @@
           "limit": {
             "context": 200000,
             "output": 64000
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
           }
         },
         "claude-opus-4-5-thinking": {
@@ -37,6 +64,10 @@
           "limit": {
             "context": 200000,
             "output": 64000
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
           }
         },
         "gpt-oss-120b-medium": {
@@ -44,6 +75,10 @@
           "limit": {
             "context": 131072,
             "output": 32768
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
           }
         }
       }
