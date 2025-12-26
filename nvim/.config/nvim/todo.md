@@ -2,31 +2,38 @@
 
 ## P0
 
+- [ ] Set LSP keymaps
+- [ ] Jupytext and Molten for Jupyter notebook support
+- [ ] Configure Opencode.nvim display mode (embedded vs external)
+    - [ ] Implement save before sending lines to Opencode
+- [ ] Implement conditional formatting: only format on manual saves, not on auto-saves
+    - Problem: Auto-save on FocusLost triggers formatting, which is annoying when working file is formatted
+    - Solution: Use buffer-local flag to distinguish manual saves from auto-saves
+    - [ ] Modify lua/plugins/conform.lua: make format_on_save a function that checks vim.b.is_manual_save flag
+    - [ ] Add keymap for manual save that sets the flag before writing (decide: <leader>w vs override :w)
+    - [ ] Test: FocusLost should save without formatting, manual save should format
+    - Reference: conform.nvim format_on_save can be function(bufnr) returning opts or nil
+
 ## P1
 
-- [ ] Configure Opencode.nvim: whether to have the screen inside neovim or outside
-    - [ ] Before sending any lines, I should format and save the buffer first
+- [ ] Learn and add some copilot settings
+- [ ] Investigate vim.opt.winbarnc for potential winbar refactoring
+- [ ] Implement debounce/throttle for winbar updates to improve performance
+- [ ] Batch nvim_set_hl calls in highlight system to reduce API overhead
 
 ## P2
 
-- [ ] Implement debounce/throttle/schedule for winbar updates
-- [ ] Batch nvim_set_hl calls in highlight system to minimize performance impact
-- [ ] vim.opt.winbarnc might be refactored the code a lot
-- [ ] LSP keymaps: go to definition, references, etc.
-- [ ] Very hard but try to trigger oil preview when entering
-- [ ] Bugs: diagnostics is not updated when opening term or something
-- [ ] Dynamic filepath reducer based on window width for winbar
+- [ ] Learn quickfix list, jumplist, and vim marks
+- [ ] Implement dynamic filepath truncation based on window width in winbar
 
 ## P3
 
-- [ ] Consider fff.nvim super fast file searcher
-- [ ] Configure scratch (oil preview) to the list (4 spaces indent or completely remove them)
-- [ ] Configure preset.lua (currently AI generated)
-- [ ] Winbar: word count in markdown files (after count.nvim is completed)
-- [ ] Learn: schedule and wrap to safely execute autocmd callbacks in Neovim
-- [ ] Learn: quickfix, jumplist, vim marks
-- [ ] Learn: nvim-surround usage
-- [ ] Search harpoon
+- [ ] Trigger oil.nvim preview automatically when entering directories
+- [ ] Evaluate harpoon for file navigation
+- [ ] Configure oil.nvim scratch buffer list formatting (adjust/remove 4-space indent)
+- [ ] Add word count component to winbar for markdown files (depends on count.nvim)
+- [ ] Learn vim.schedule() and vim.schedule_wrap() for safe autocmd callbacks
+- [ ] Learn nvim-surround keybindings and usage patterns
 
 ## Done
 
@@ -91,3 +98,7 @@
     - [x] Don't skip rendering in Oil
     - [x] Complete redesign of winbar module order and layout
 - [x] Organize the autocmds with group names, and consider the order of the autocmds
+- [x] Fix bug: diagnostics not updating when opening terminal buffers
+- [x] Evaluate fff.nvim as a fast file searcher alternative
+- [x] Try cloak.nvim for sensitive data hiding
+- [x] Encode isn't working I guess
