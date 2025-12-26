@@ -5,6 +5,7 @@ export EDITOR='nvim'
 alias n='nvim .'
 alias nvim-test='NVIM_APPNAME=nvim-test nvim'
 alias o='opencode'
+alias d='cd ~/Documents'
 alias g='git'
 alias p='cd ~/Projects'
 
