@@ -5,18 +5,40 @@ local colorscheme = require "modules.colorscheme"
 
 local last_os_theme
 local function get_updated_theme()
-    -- Get the current OS theme
-    local handle = io.popen "defaults read -g AppleInterfaceStyle 2>/dev/null"
-    if not handle then
-        return nil
-    end
-    local theme = handle:read "*a"
-    handle:close()
-    theme = theme:gsub("%s+", "")
-    if theme == "" then
-        theme = "light"
+    local theme
+    local uname = vim.loop.os_uname().sysname
+
+    if uname == "Darwin" then
+        -- macOS: Use defaults command to read AppleInterfaceStyle
+        local handle = io.popen("defaults read -g AppleInterfaceStyle 2>/dev/null")
+        if handle then
+            local result = handle:read "*a"
+            handle:close()
+            result = result:gsub("%s+", "")
+            if result == "" or result:lower() ~= "dark" then
+                theme = "light"
+            else
+                theme = "dark"
+            end
+        end
     else
-        theme = theme:lower()
+        -- Linux: Use gsettings to read GTK/GNOME color-scheme
+        local handle = io.popen("gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null")
+        if handle then
+            local result = handle:read "*a"
+            handle:close()
+            result = result:gsub("%s+", ""):gsub("'", "")
+            if result == "prefer-dark" then
+                theme = "dark"
+            elseif result == "prefer-light" or result == "default" then
+                theme = "light"
+            end
+        end
+    end
+
+    -- Fallback if detection failed
+    if not theme then
+        return nil
     end
 
     -- Validate and check for changes
