@@ -1,0 +1,12 @@
+# QMK-specific files to NOT commit to GitHub
+
+# Compiled firmware binaries
+*.bin
+*.hex
+*.elf
+
+# Build artifacts
+.build/
+
+# QMK CLI config (contains hardcoded paths)
+qmk.ini
