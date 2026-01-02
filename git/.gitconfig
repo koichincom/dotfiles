@@ -4,6 +4,7 @@
 
 [core]
     editor = nvim
+    autocrlf = input
     excludesfile = ~/.gitignore_global
 
 [init]
@@ -14,37 +15,3 @@
 
 [rebase]
     autoStash = true
-
-[alias]
-    # Basic shortcuts
-    st = status
-    co = checkout
-    br = branch
-    ci = commit
-    
-    # Commit shortcuts
-    cm = commit -m
-    ca = commit --amend
-    cane = commit --amend --no-edit
-    
-    # Branch operations
-    sw = switch
-    swc = switch -c
-    
-    # Log views
-    lg = log --oneline --graph --decorate
-    last = log -1 HEAD
-    
-    # Diff shortcuts
-    df = diff
-    dfc = diff --cached
-    
-    # Staging
-    aa = add --all
-    unstage = reset HEAD --
-    
-    # Stash shortcuts
-    stash-all = stash save --include-untracked
-    
-    # Status shortcuts
-    s = status -s

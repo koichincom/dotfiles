@@ -1,19 +1,6 @@
 # Global .gitignore file
 # Only list files and directories which should be ignored all the time 
 
-# MacOS system files
-.DS_Store
-.AppleDouble
-.LSOverride
-._*
-.Spotlight-V100
-.Trashes
-*.icloud
-.DocumentRevisions-V100
-.fseventsd
-.TemporaryItems
-.VolumeIcon.icns
-
 # Development
 .venv/
 venv/
