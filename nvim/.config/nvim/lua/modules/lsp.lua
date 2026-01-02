@@ -28,7 +28,7 @@ function M.init()
     })
 
     -- LSP navigation keymaps (Telescope integration)
-    local telescope_builtin = require("telescope.builtin")
+    -- local telescope_builtin = require("telescope.builtin")
 
     -- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
     -- vim.keymap.set("n", "gd", telescope_builtin.lsp_definitions, { desc = "Go to definition" })
