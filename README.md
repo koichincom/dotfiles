@@ -1,11 +1,9 @@
 # Dotfiles
 
-Personal configuration files for macOS, managed with GNU Stow.
-
-## Installation
+Personal configuration files for Arch Linux, managed with GNU Stow. Use the following for quick installation, and refer to the [GNU Stow documentation](https://www.gnu.org/software/stow/) for more details.
 
 ```bash
 git clone https://github.com/koichincom/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-stow nvim nvim-dev zsh git ghostty editorconfig opencode
+stow [package-name]
 ```
