@@ -31,7 +31,7 @@ alias zigdev="$HOME/.local/share/zig-x86_64-linux-0.16.0-dev.1859+212968c57/zig"
 PROMPT='[%n@%m %1~]$ '
 
 # Environment variables
-# opencode
+export EDITOR='nvim'
 export PATH=/home/koichi/.opencode/bin:$PATH
 
 # bun
