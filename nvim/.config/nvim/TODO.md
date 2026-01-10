@@ -2,6 +2,10 @@
 
 ## P0
 
+- [ ] Stablize Treesitter (everything is broken after starting to use this Thinkpad)
+
+## P1
+
 - [ ] Set LSP keymaps
 - [ ] Jupytext and Molten for Jupyter notebook support
 - [ ] Configure Opencode.nvim display mode (embedded vs external)
@@ -13,9 +17,6 @@
     - [ ] Add keymap for manual save that sets the flag before writing (decide: <leader>w vs override :w)
     - [ ] Test: FocusLost should save without formatting, manual save should format
     - Reference: conform.nvim format_on_save can be function(bufnr) returning opts or nil
-
-## P1
-
 - [ ] Learn and add some copilot settings
 - [ ] Investigate vim.opt.winbarnc for potential winbar refactoring
 - [ ] Implement debounce/throttle for winbar updates to improve performance
