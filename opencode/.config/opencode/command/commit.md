@@ -1,73 +1,51 @@
 ---
 description: Plan git commits
 agent: plan
+model: google/antigravity-gemini-3-flash
 ---
 
 Analyze the current git changes and plan well-structured, atomic commits.
 
-## Current Repository State
+## Instructions
+
+### Step 0: Gather Repository State
+
+Understand the current state of the git repository by reading the following outputs:
 
 Git status:
 !`git status --short`
 
-Unstaged changes:
-!`git diff`
-
-Staged changes:
-!`git diff --staged`
+Changed files summary:
+!`git diff --name-status`
+!`git diff --staged --name-status`
 
 Recent commits (for style reference):
-!`git log --oneline -5`
+!`git log --format=%s -5`
 
-Untracked files:
-!`git ls-files --others --exclude-standard`
+### Step 1: Analyze and Group Changes
 
-## Security Check (MANDATORY)
+**Scope Policy**: Only plan commits for changes that ACTUALLY EXIST in the status output above. Do NOT suggest commits for changes that should be made but are not present. If you notice something that should be done (e.g., add a file to .gitignore), do NOT include it as a planned commit.
 
-@skill/git-secret-scan/SKILL.md
+**Process**:
 
-## Instructions
+- If git status shows NO changes (no staged, no unstaged, no untracked), skip to Step 3 and report "No commits planned."
+- Review the changed files summary above.
+- For files where you need detailed diff context to understand intent, run `git diff <file>` or `git diff --staged <file>` selectively.
+- Only read files that appear in the status to understand context; do not scan unrelated files.
 
-### Step 0: Execute Security Scan
-
-Before planning any commits, follow the git-secret-scan skill instructions above:
-
-1. Scan the Git status output, Unstaged changes diff, Staged changes diff, and Untracked files list above for sensitive patterns
-2. Check .gitignore coverage for any sensitive files discovered
-3. If sensitive data is detected:
-   - STOP. Do NOT plan any commits.
-   - Report findings using the skill's severity levels (CRITICAL/HIGH/SEVERE/INFO)
-   - Provide specific remediation steps from the skill
-   - Use TodoWrite to create remediation tasks instead of commit tasks
-4. Only proceed to Step 1 if NO sensitive data is found
-
-### Step 1: Define Scope
-
-- ONLY use the Unstaged changes diff above.
-- Ignore the Staged changes section entirely.
-
-### Step 2: Analyze Changes
-
-- Review the diff output provided above.
-- Read source files as needed to understand the intent and context behind changes.
-
-### Step 3: Group into Atomic Commits
-
-CRITICAL: Only plan commits for changes that ACTUALLY EXIST in the diff output above.
-Do NOT suggest commits for changes that should be made but are not in the diff.
-If you notice something that should be done (e.g., add a file to .gitignore), do NOT include it as a planned commit. That is outside the scope of this command.
+**Grouping Rules**:
 
 Each commit should represent ONE logical change. Prefer the minimum number of commits that keep review clarity; do not split by file or micro-changes. Aim for 1–3 commits unless a clear separation exists (feature/test/docs/config).
+
 Good modular commits are:
 
-- Based ONLY on the changes shown in the diff output.
 - Independently reviewable and revertible.
 - Focused on a single purpose (do not mix refactoring with bug fixes).
 - Ordered logically (dependencies first).
 
 Separate commits for: refactoring, features, bug fixes, docs, tests, config changes.
 
-### Step 4: Write Commit Messages
+### Step 2: Write Commit Messages
 
 Use Conventional Commits format. No emojis.
 
@@ -94,9 +72,11 @@ Breaking changes:
 - Add `!` after type/scope: `feat(api)!: remove deprecated endpoint`.
 - Or add footer: `BREAKING CHANGE: description`.
 
-### Step 5: Execution (Mandatory)
+### Step 3: Execution (Mandatory)
 
-You MUST perform these actions in this exact order:
+**If NO changes exist** (status was empty), output: "No commits planned." and STOP. Do NOT use TodoWrite.
+
+**If changes exist**, you MUST perform these actions in this exact order:
 
 1. **Record the Plan**: Use the `TodoWrite` tool to create the todo items.
    - content: exactly the subject line (e.g., "feat(ui): add button"). No body, no rationale, no extra text.
