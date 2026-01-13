@@ -9,7 +9,7 @@
         "external_directory": "allow"
     },
     "plugin": [
-        "opencode-antigravity-auth@beta"
+        "opencode-antigravity-auth@beta",
     ],
     "provider": {
         "google": {
@@ -31,8 +31,12 @@
                         ]
                     },
                     "variants": {
-                        "low": { "thinkingLevel": "low" },
-                        "high": { "thinkingLevel": "high" }
+                        "low": {
+                            "thinkingLevel": "low"
+                        },
+                        "high": {
+                            "thinkingLevel": "high"
+                        }
                     }
                 },
                 "antigravity-gemini-3-flash": {
@@ -52,10 +56,18 @@
                         ]
                     },
                     "variants": {
-                        "minimal": { "thinkingLevel": "minimal" },
-                        "low": { "thinkingLevel": "low" },
-                        "medium": { "thinkingLevel": "medium" },
-                        "high": { "thinkingLevel": "high" }
+                        "minimal": {
+                            "thinkingLevel": "minimal"
+                        },
+                        "low": {
+                            "thinkingLevel": "low"
+                        },
+                        "medium": {
+                            "thinkingLevel": "medium"
+                        },
+                        "high": {
+                            "thinkingLevel": "high"
+                        }
                     }
                 },
                 "antigravity-claude-sonnet-4-5": {
@@ -92,8 +104,16 @@
                         ]
                     },
                     "variants": {
-                        "low": { "thinkingConfig": { "thinkingBudget": 8192 } },
-                        "max": { "thinkingConfig": { "thinkingBudget": 32768 } }
+                        "low": {
+                            "thinkingConfig": {
+                                "thinkingBudget": 8192
+                            }
+                        },
+                        "max": {
+                            "thinkingConfig": {
+                                "thinkingBudget": 32768
+                            }
+                        }
                     }
                 },
                 "antigravity-claude-opus-4-5-thinking": {
@@ -113,8 +133,16 @@
                         ]
                     },
                     "variants": {
-                        "low": { "thinkingConfig": { "thinkingBudget": 8192 } },
-                        "max": { "thinkingConfig": { "thinkingBudget": 32768 } }
+                        "low": {
+                            "thinkingConfig": {
+                                "thinkingBudget": 8192
+                            }
+                        },
+                        "max": {
+                            "thinkingConfig": {
+                                "thinkingBudget": 32768
+                            }
+                        }
                     }
                 },
                 "gemini-2.5-flash": {
