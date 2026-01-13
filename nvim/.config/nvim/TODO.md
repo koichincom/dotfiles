@@ -3,11 +3,11 @@
 ## P0
 
 - [ ] Stablize Treesitter (everything is broken after starting to use this Thinkpad)
+- [ ] Set up Quarto (and use Jupyter notebooks inside Neovim)
 
 ## P1
 
 - [ ] Set LSP keymaps
-- [ ] Jupytext and Molten for Jupyter notebook support
 - [ ] Configure Opencode.nvim display mode (embedded vs external)
     - [ ] Implement save before sending lines to Opencode
 - [ ] Implement conditional formatting: only format on manual saves, not on auto-saves
