@@ -1,7 +1,3 @@
-#
-# ~/.zshrc
-#
-
 # If not running interactively, don't do anything
 [[ ! -o interactive ]] && return
 
@@ -21,7 +17,8 @@ setopt APPEND_HISTORY
 alias light='gsettings set org.gnome.desktop.interface color-scheme "prefer-light"'
 alias dark='gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"'
 
-alias n='nvim'
+alias n='nvim .'
+alias nv='nvim'
 alias o='opencode'
 alias g='git'
 alias p="cd ~/Projects"
