@@ -1,10 +1,10 @@
 local M = {}
 
-function M.get_copilot(is_enable)
+function M.get_gh_copilot(is_enable)
     if is_enable then
         return { text = "", is_alert = false }
     else
-        return { text = "copilot:off", is_alert = true }
+        return { text = "ai-comp:off", is_alert = true }
     end
 end
 

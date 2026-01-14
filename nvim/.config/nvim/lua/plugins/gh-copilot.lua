@@ -8,7 +8,7 @@ return {
         {
             "<leader>tc",
             function()
-                require("modules.copilot").toggle()
+                require("modules.gh-copilot").toggle()
             end,
             desc = "Toggle Copilot",
         },
@@ -23,7 +23,7 @@ return {
         },
     },
     config = function()
-        require("core.autocmds").init_copilot()
-        require("modules.copilot").update_winbar() -- Initialize winbar
+        require("core.autocmds").init_gh_copilot()
+        require("modules.gh-copilot").update_winbar() -- Initialize winbar
     end,
 }

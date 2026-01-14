@@ -97,7 +97,7 @@ Neovim configuration guide for agentic coding assistants. This document describe
 ### Keymaps
 - **Leader**: Space (`vim.g.mapleader = " "`)
 - **Global**: Minimal global keymaps in `core/keymaps.lua`
-- **Plugin-specific**: Defined in plugin config functions (e.g., `copilot.lua`, `telescope.lua`)
+- **Plugin-specific**: Defined in plugin config functions (e.g., `gh-copilot.lua`, `telescope.lua`)
 - **Format**: `vim.keymap.set(mode, lhs, rhs, { desc = "Description", ... })`
 - **Descriptive**: Always include `desc` for which-key and discoverability
 
@@ -145,8 +145,8 @@ Neovim configuration guide for agentic coding assistants. This document describe
 - **Structure**: `main.lua` + `components/{buffer,editor,project}.lua`
 - **Pattern**: Component map with state + getter functions (see `winbar/main.lua:7-47`)
 - **Updates**: `winbar.update_component(name, params)` triggers state comparison and re-render only if changed
-- **Components**: cwd, diagnostics, git_branch, file_path_name, encode, file_mod, wrap, copilot, auto_write
-- **Integration**: Plugins/modules call `update_component()` to update winbar state (e.g., `copilot.lua:27`, `gitsigns.lua:9`)
+- **Components**: cwd, diagnostics, git_branch, file_path_name, encode, file_mod, wrap, gh_copilot, auto_write
+- **Integration**: Plugins/modules call `update_component()` to update winbar state (e.g., `gh-copilot.lua:27`, `gitsigns.lua:9`)
 
 ### Highlight Namespace System
 - **Location**: `lua/modules/highlight/`
@@ -186,15 +186,15 @@ Neovim configuration guide for agentic coding assistants. This document describe
 - **Update components**: `require("modules.winbar.main").update_component(name, params)`
   - Pass `nil` for `params` to trigger re-fetch from getter
   - Pass value for `params` to directly set state
-- **Examples**: `copilot.lua:27`, `gitsigns.lua:9`
+- **Examples**: `gh-copilot.lua:27`, `gitsigns.lua:9`
 
 ### Autocmds
 - **Define**: In `core/autocmds.lua` with `init_*()` functions
 - **Call**: From `init.lua` (`init_general()`) or plugin config functions (`init_gitsigns()`, `init_lint()`)
 - **Pattern**: Lazy-load module dependencies inside `init_*()` functions (see `autocmds.lua:18-26`)
 
-### Copilot
-- **Config**: `lua/plugins/copilot.lua`
+### GitHub Copilot
+- **Config**: `lua/plugins/gh-copilot.lua`
 - **Accept key**: `<C-J>` (not Tab)
 - **Toggle**: `<leader>tc`
 - **Integration**: Minimal; avoid heavy customization per AGENTS.md philosophy

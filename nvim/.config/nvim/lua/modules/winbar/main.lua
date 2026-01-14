@@ -36,9 +36,9 @@ local components_map = {
         state = { text = "", is_alert = false },
         getter = editor.get_wrap,
     },
-    copilot = {
+    gh_copilot = {
         state = { text = "", is_alert = false },
-        getter = editor.get_copilot,
+        getter = editor.get_gh_copilot,
     },
     auto_write = {
         state = { text = "", is_alert = false },
@@ -104,7 +104,7 @@ function M.render()
     })
 
     local flags = join(" ", {
-        render_alert_component(cm.copilot.state),
+        render_alert_component(cm.gh_copilot.state),
         render_alert_component(cm.wrap.state),
         render_alert_component(cm.auto_write.state),
         render_alert_component(cm.encode.state),

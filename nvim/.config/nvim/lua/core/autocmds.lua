@@ -11,7 +11,7 @@ local list_group = vim.api.nvim_create_augroup("MyList", { clear = true })
 local wrap_group = vim.api.nvim_create_augroup("MyWrap", { clear = true })
 local auto_write_group = vim.api.nvim_create_augroup("MyAutoWrite", { clear = true })
 local lint_group = vim.api.nvim_create_augroup("MyLint", { clear = true })
-local copilot_group = vim.api.nvim_create_augroup("MyCopilot", { clear = true })
+local gh_copilot_group = vim.api.nvim_create_augroup("MyGhCopilot", { clear = true })
 
 function M.init_general()
     local winbar = require("modules.winbar.main")
@@ -285,13 +285,13 @@ function M.init_lint()
     })
 end
 
-function M.init_copilot()
-    local copilot = require("modules.copilot")
-    vim.api.nvim_clear_autocmds({ group = copilot_group })
+function M.init_gh_copilot()
+    local gh_copilot = require("modules.gh-copilot")
+    vim.api.nvim_clear_autocmds({ group = gh_copilot_group })
     vim.api.nvim_create_autocmd("BufEnter", {
-        group = copilot_group,
+        group = gh_copilot_group,
         callback = function()
-            copilot.update_winbar()
+            gh_copilot.update_winbar()
         end,
     })
 end

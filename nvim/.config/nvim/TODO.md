@@ -4,7 +4,7 @@
 
 - [ ] Set up Quarto to use Jupyter Notebook
 - [ ] Set LSP keymaps
-- [ ] Set up Copilot settings
+- [ ] Set up GitHub Copilot settings
 
 ## P1
 
@@ -50,7 +50,7 @@
     - [x] Remove the custom auto-save component logic
 - [x] Update highlight presets for light mode especially
 - [x] Organize the plugin files by changing the names and separating by one plugin per file
-- [x] Only use copilot.vim, not supermaven
+- [x] Only use gh-copilot (copilot.vim), not supermaven
 - [x] Add modes highlight namespaces for each category (2 _ 2 _ 4 namespaces)
 - [x] Add winbar specific values for the highlight presets
 - [x] Integrate highlight namespace system endpoints
@@ -77,7 +77,7 @@
     - [x] Core winbar components (path, encoding, file_mod, auto_save, wrap)
         - [x] Special buffer handling (skip render for buftype ~= "")
     - [x] vim.opt investigation - not applicable for winbar (string-only option, table.concat is optimal)
-    - [x] Copilot indicator component (After setting up llm-completion module system)
+    - [x] GitHub Copilot indicator component (After setting up llm-completion module system)
     - [x] Layout update (Left-Center-Right)
     - [x] Exception-based status logic (!Save, !AI, Wrap)
     - [x] Visual update (Dot for modified, specific icons)
