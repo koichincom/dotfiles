@@ -2,63 +2,63 @@
 return {
     "monaqa/dial.nvim",
     config = function()
-        local augend = require "dial.augend"
-        require("dial.config").augends:register_group {
+        local augend = require("dial.augend")
+        require("dial.config").augends:register_group({
             default = {
-                augend.constant.new {
+                augend.constant.new({
                     elements = { "True", "False" },
                     word = true,
                     cyclic = true,
-                },
-                augend.constant.new {
+                }),
+                augend.constant.new({
                     elements = { "true", "false" },
                     word = true,
                     cyclic = true,
-                },
-                augend.constant.new {
+                }),
+                augend.constant.new({
                     elements = { "and", "or" },
                     word = true,
                     cyclic = true,
-                },
+                }),
             },
-        }
+        })
 
-        require("dial.config").augends:on_filetype {
+        require("dial.config").augends:on_filetype({
             python = {
                 augend.integer.alias.decimal,
-                augend.constant.new {
+                augend.constant.new({
                     elements = { " == ", " != " },
                     word = false,
                     cyclic = true,
-                },
-                augend.constant.new {
+                }),
+                augend.constant.new({
                     elements = { "else", "elif", "if" },
                     word = true,
                     cyclic = true,
-                },
+                }),
             },
             lua = {
                 augend.integer.alias.decimal,
-                augend.constant.new {
+                augend.constant.new({
                     elements = { " == ", " ~= " },
                     word = false,
                     cyclic = true,
-                },
-                augend.constant.new {
+                }),
+                augend.constant.new({
                     elements = { "else", "elseif", "if" },
                     word = true,
                     cyclic = true,
-                },
+                }),
             },
             markdown = {
                 augend.integer.alias.decimal,
-                augend.constant.new {
+                augend.constant.new({
                     elements = { "- [ ]", "- [x]" },
                     word = false,
                     cyclic = true,
-                },
+                }),
             },
-        }
+        })
 
         -- Required keymaps to enable dial.nvim functionality
         vim.keymap.set("n", "<C-a>", function()

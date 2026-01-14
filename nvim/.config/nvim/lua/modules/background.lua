@@ -1,7 +1,7 @@
 local M = {}
 
-local highlight = require "modules.highlight.main"
-local colorscheme = require "modules.colorscheme"
+local highlight = require("modules.highlight.main")
+local colorscheme = require("modules.colorscheme")
 
 local last_os_theme
 local function get_updated_theme()
@@ -12,7 +12,7 @@ local function get_updated_theme()
         -- macOS: Use defaults command to read AppleInterfaceStyle
         local handle = io.popen("defaults read -g AppleInterfaceStyle 2>/dev/null")
         if handle then
-            local result = handle:read "*a"
+            local result = handle:read("*a")
             handle:close()
             result = result:gsub("%s+", "")
             if result == "" or result:lower() ~= "dark" then
@@ -25,7 +25,7 @@ local function get_updated_theme()
         -- Linux: Use gsettings to read GTK/GNOME color-scheme
         local handle = io.popen("gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null")
         if handle then
-            local result = handle:read "*a"
+            local result = handle:read("*a")
             handle:close()
             result = result:gsub("%s+", ""):gsub("'", "")
             if result == "prefer-dark" then
