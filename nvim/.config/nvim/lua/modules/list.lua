@@ -1,5 +1,6 @@
 local M = {}
 
+-- Update leadmultispace based on current shiftwidth
 function M.update_leadmultispace()
     local shiftwidth = vim.bo.shiftwidth
     vim.notify("Updating leadmultispace to shiftwidth: " .. shiftwidth, vim.log.levels.DEBUG)

@@ -1,7 +1,5 @@
-# font-family = "IosevkaTermSlab NF"
 font-family = "IosevkaTerm NerdFont"
 font-feature = "-calt, -liga, -dlig"
 theme = dark:"GitHub Dark Dimmed", light:"GitHub Light Default"
 font-size = 20
-custom-shader = shaders/cursor_smear.glsl
 unfocused-split-opacity = 1

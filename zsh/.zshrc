@@ -22,6 +22,7 @@ alias nv='nvim'
 alias o='opencode'
 alias g='git'
 alias p="cd ~/Projects"
+
 alias zigdev="$HOME/.local/share/zig-x86_64-linux-0.16.0-dev.1859+212968c57/zig"
 
 # Custom prompt (adapted from bash PS1='[\u@\h \W]\$ ')

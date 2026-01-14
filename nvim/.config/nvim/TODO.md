@@ -2,14 +2,15 @@
 
 ## P0
 
-- [ ] Stablize Treesitter (everything is broken after starting to use this Thinkpad)
-- [ ] Set up Quarto (and use Jupyter notebooks inside Neovim)
+- [ ] Set up Quarto to use Jupyter Notebook
+- [ ] Set LSP keymaps
+- [ ] Set up Copilot settings
 
 ## P1
 
-- [ ] Set LSP keymaps
 - [ ] Configure Opencode.nvim display mode (embedded vs external)
     - [ ] Implement save before sending lines to Opencode
+    - [ ] Some nice way of getting some text and send it to Opencode
 - [ ] Implement conditional formatting: only format on manual saves, not on auto-saves
     - Problem: Auto-save on FocusLost triggers formatting, which is annoying when working file is formatted
     - Solution: Use buffer-local flag to distinguish manual saves from auto-saves
@@ -17,27 +18,27 @@
     - [ ] Add keymap for manual save that sets the flag before writing (decide: <leader>w vs override :w)
     - [ ] Test: FocusLost should save without formatting, manual save should format
     - Reference: conform.nvim format_on_save can be function(bufnr) returning opts or nil
-- [ ] Learn and add some copilot settings
+
+## P2
+
 - [ ] Investigate vim.opt.winbarnc for potential winbar refactoring
 - [ ] Implement debounce/throttle for winbar updates to improve performance
 - [ ] Batch nvim_set_hl calls in highlight system to reduce API overhead
 
-## P2
-
-- [ ] Learn quickfix list, jumplist, and vim marks
-- [ ] Implement dynamic filepath truncation based on window width in winbar
-
 ## P3
 
 - [ ] Trigger oil.nvim preview automatically when entering directories
-- [ ] Evaluate harpoon for file navigation
-- [ ] Configure oil.nvim scratch buffer list formatting (adjust/remove 4-space indent)
-- [ ] Add word count component to winbar for markdown files (depends on count.nvim)
+- [ ] Check Harpoon and vim marks
+- [ ] Learn quickfix list and jumplist
+- [ ] Scratch buffer tab width adjustment default to 4 (used by Oil preview)
+- [ ] Create count.nvim and add word counter in winbar
 - [ ] Learn vim.schedule() and vim.schedule_wrap() for safe autocmd callbacks
-- [ ] Learn nvim-surround keybindings and usage patterns
+- [ ] Learn nvim-surround
+- [ ] Dynamic filepath truncation based on window width in winbar
 
 ## Done
 
+- [x] Stablize Treesitter
 - [x] New way of triggering linting and formatting
     - [x] Formating trigger update
     - [x] Linting trigger update
@@ -103,3 +104,4 @@
 - [x] Evaluate fff.nvim as a fast file searcher alternative
 - [x] Try cloak.nvim for sensitive data hiding
 - [x] Encode isn't working I guess
+- [x] Update autocmd.lua for the require() var use
