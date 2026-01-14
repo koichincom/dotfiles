@@ -1,4 +1,3 @@
--- LSP feature module using Neovim 0.11+ native APIs
 local M = {}
 
 function M.init()
@@ -28,16 +27,16 @@ function M.init()
     })
 
     -- LSP navigation keymaps (Telescope integration)
-    -- local telescope_builtin = require("telescope.builtin")
+    local telescope_builtin = require("telescope.builtin")
 
-    -- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
-    -- vim.keymap.set("n", "gd", telescope_builtin.lsp_definitions, { desc = "Go to definition" })
-    -- vim.keymap.set("n", "gt", telescope_builtin.lsp_type_definitions, { desc = "Go to type definition" })
-    -- vim.keymap.set("n", "gi", telescope_builtin.lsp_implementations, { desc = "Go to implementation" })
-    -- vim.keymap.set("n", "gr", telescope_builtin.lsp_references, { desc = "Find references" })
-    -- vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
-    -- vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature help" })
-    -- vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+    vim.keymap.set("n", "gd", telescope_builtin.lsp_definitions, { desc = "Go to definition" })
+    vim.keymap.set("n", "gt", telescope_builtin.lsp_type_definitions, { desc = "Go to type definition" })
+    vim.keymap.set("n", "gi", telescope_builtin.lsp_implementations, { desc = "Go to implementation" })
+    vim.keymap.set("n", "gr", telescope_builtin.lsp_references, { desc = "Find references" })
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation" })
+    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature help" })
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
 end
 
 return M

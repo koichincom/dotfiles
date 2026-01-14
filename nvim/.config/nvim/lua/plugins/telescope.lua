@@ -1,8 +1,6 @@
--- Telescope for grep, buffers, help, LSP symbols, and undo (file finding via fff.nvim)
 return {
     "nvim-telescope/telescope.nvim",
     event = "VimEnter",
-    tag = "0.1.8",
     dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope-ui-select.nvim",
@@ -34,7 +32,6 @@ return {
         vim.keymap.set("n", "<leader>fg", builtin.live_grep, opts)
         vim.keymap.set("n", "<leader>fb", builtin.buffers, opts)
         vim.keymap.set("n", "<leader>fh", builtin.help_tags, opts)
-        vim.keymap.set("n", "<leader>fds", builtin.lsp_document_symbols, opts)
         vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>", opts)
     end,
 }
