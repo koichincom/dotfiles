@@ -1,10 +1,8 @@
 local M = {}
 
--- Set to nil to make it sharable across this fill
-local highlight, winbar, background, list, wrap, cursor_line, lint, auto_write = nil, nil, nil, nil, nil, nil, nil, nil
-
 -- Create feature-based augroups
-local winbar_group = vim.api.nvim_create_augroup("MyWinbar", { clear = true })
+local winbar_general_group = vim.api.nvim_create_augroup("MyWinbar", { clear = true })
+local winbar_gitsigns_group = vim.api.nvim_create_augroup("MyWinbarGitsigns", { clear = true })
 local highlight_group = vim.api.nvim_create_augroup("MyHighlight", { clear = true })
 local cursorline_group = vim.api.nvim_create_augroup("MyCursorline", { clear = true })
 local background_group = vim.api.nvim_create_augroup("MyBackground", { clear = true })
@@ -13,19 +11,19 @@ local list_group = vim.api.nvim_create_augroup("MyList", { clear = true })
 local wrap_group = vim.api.nvim_create_augroup("MyWrap", { clear = true })
 local auto_write_group = vim.api.nvim_create_augroup("MyAutoWrite", { clear = true })
 local lint_group = vim.api.nvim_create_augroup("MyLint", { clear = true })
+local copilot_group = vim.api.nvim_create_augroup("MyCopilot", { clear = true })
 
 function M.init_general()
-    if winbar == nil then
-        winbar = require("modules.winbar.main")
-    end
-    background = require("modules.background")
-    list = require("modules.list")
-    wrap = require("modules.wrap")
-    cursor_line = require("modules.cursorline")
-    highlight = require("modules.highlight.main")
-    auto_write = require("modules.auto-write")
+    local winbar = require("modules.winbar.main")
+    local background = require("modules.background")
+    local list = require("modules.list")
+    local wrap = require("modules.wrap")
+    local cursor_line = require("modules.cursorline")
+    local highlight = require("modules.highlight.main")
+    local auto_write = require("modules.auto-write")
 
     -- Highlight group
+    vim.api.nvim_clear_autocmds({ group = highlight_group })
     vim.api.nvim_create_autocmd("WinLeave", {
         group = highlight_group,
         callback = function()
@@ -73,6 +71,7 @@ function M.init_general()
     })
 
     -- Cursorline group
+    vim.api.nvim_clear_autocmds({ group = cursorline_group })
     vim.api.nvim_create_autocmd("WinLeave", {
         group = cursorline_group,
         callback = function()
@@ -88,6 +87,7 @@ function M.init_general()
     })
 
     -- Background group
+    vim.api.nvim_clear_autocmds({ group = background_group })
     vim.api.nvim_create_autocmd("FocusGained", {
         group = background_group,
         callback = function()
@@ -97,6 +97,7 @@ function M.init_general()
     })
 
     -- FileSync group
+    vim.api.nvim_clear_autocmds({ group = file_sync_group })
     vim.api.nvim_create_autocmd("FocusGained", {
         group = file_sync_group,
         callback = function()
@@ -105,6 +106,7 @@ function M.init_general()
     })
 
     -- List group
+    vim.api.nvim_clear_autocmds({ group = list_group })
     vim.api.nvim_create_autocmd("BufReadPost", {
         group = list_group,
         callback = function()
@@ -121,6 +123,7 @@ function M.init_general()
     })
 
     -- Wrap group
+    vim.api.nvim_clear_autocmds({ group = wrap_group })
     vim.api.nvim_create_autocmd("BufEnter", {
         group = wrap_group,
         callback = function(args)
@@ -130,6 +133,7 @@ function M.init_general()
     })
 
     -- AutoWrite group
+    vim.api.nvim_clear_autocmds({ group = auto_write_group })
     vim.api.nvim_create_autocmd("OptionSet", {
         group = auto_write_group,
         pattern = { "hidden" },
@@ -163,8 +167,9 @@ function M.init_general()
     })
 
     -- Winbar group
+    vim.api.nvim_clear_autocmds({ group = winbar_general_group })
     vim.api.nvim_create_autocmd({ "BufEnter", "BufFilePost" }, {
-        group = winbar_group,
+        group = winbar_general_group,
         callback = function()
             winbar.update_component("file_path_name", nil)
         end,
@@ -172,7 +177,7 @@ function M.init_general()
     })
 
     vim.api.nvim_create_autocmd({ "BufEnter" }, {
-        group = winbar_group,
+        group = winbar_general_group,
         callback = function()
             winbar.update_component("encode", nil)
         end,
@@ -180,7 +185,7 @@ function M.init_general()
     })
 
     vim.api.nvim_create_autocmd("OptionSet", {
-        group = winbar_group,
+        group = winbar_general_group,
         pattern = "fileencoding",
         callback = function()
             winbar.update_component("encode", nil)
@@ -189,7 +194,7 @@ function M.init_general()
     })
 
     vim.api.nvim_create_autocmd("BufModifiedSet", {
-        group = winbar_group,
+        group = winbar_general_group,
         callback = function()
             winbar.update_component("file_mod", nil)
         end,
@@ -197,7 +202,7 @@ function M.init_general()
     })
 
     vim.api.nvim_create_autocmd("DiagnosticChanged", {
-        group = winbar_group,
+        group = winbar_general_group,
         callback = function(args)
             -- Don't update if the diagnostics change is not for the current buffer
             if args.buf == vim.api.nvim_get_current_buf() then
@@ -209,14 +214,14 @@ function M.init_general()
     -- OptirnSet with buftype might be optimal, but seems unreliable with plugins like Oil here
     -- Checking the buftype might also be ideal, but it's very unstable for Oil and terminal buffers somehow
     vim.api.nvim_create_autocmd({ "BufEnter", "TermOpen" }, {
-        group = winbar_group,
+        group = winbar_general_group,
         callback = function()
             winbar.update_component("diagnostics", nil)
         end,
     })
 
     vim.api.nvim_create_autocmd("DirChanged", {
-        group = winbar_group,
+        group = winbar_general_group,
         callback = function()
             winbar.update_component("cwd", nil)
         end,
@@ -224,7 +229,7 @@ function M.init_general()
     })
 
     vim.api.nvim_create_autocmd("VimEnter", {
-        group = winbar_group,
+        group = winbar_general_group,
         callback = function()
             winbar.update_component("cwd", nil)
         end,
@@ -232,7 +237,7 @@ function M.init_general()
     })
 
     vim.api.nvim_create_autocmd("BufEnter", {
-        group = winbar_group,
+        group = winbar_general_group,
         callback = function()
             winbar.render()
         end,
@@ -241,10 +246,11 @@ function M.init_general()
 end
 
 function M.init_gitsigns()
-    winbar = require("modules.winbar.main")
+    local winbar = require("modules.winbar.main")
 
+    vim.api.nvim_clear_autocmds({ group = winbar_gitsigns_group })
     vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "BufEnter" }, {
-        group = winbar_group,
+        group = winbar_gitsigns_group,
         callback = function()
             winbar.update_component("git_branch", true)
         end,
@@ -254,8 +260,9 @@ function M.init_gitsigns()
 end
 
 function M.init_lint()
-    lint = require("modules.lint")
+    local lint = require("modules.lint")
 
+    vim.api.nvim_clear_autocmds({ group = lint_group })
     vim.api.nvim_create_autocmd("BufEnter", {
         group = lint_group,
         callback = function()
@@ -274,6 +281,17 @@ function M.init_lint()
         group = lint_group,
         callback = function()
             lint.main("InsertLeave")
+        end,
+    })
+end
+
+function M.init_copilot()
+    local copilot = require("modules.copilot")
+    vim.api.nvim_clear_autocmds({ group = copilot_group })
+    vim.api.nvim_create_autocmd("BufEnter", {
+        group = copilot_group,
+        callback = function()
+            copilot.update_winbar()
         end,
     })
 end
