@@ -1,5 +1,10 @@
+# Non-mono font for flexible NerdFont width
 font-family = "IosevkaTerm NerdFont"
+
+# Disable liguatures fully
 font-feature = "-calt, -liga, -dlig"
+
 theme = dark:"GitHub Dark Dimmed", light:"GitHub Light Default"
 font-size = 20
 unfocused-split-opacity = 1
+adjust-cell-height = 5%
