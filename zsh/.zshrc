@@ -14,6 +14,7 @@ setopt HIST_IGNORE_SPACE
 setopt SHARE_HISTORY
 setopt APPEND_HISTORY
 
+# Aliases
 alias light='gsettings set org.gnome.desktop.interface color-scheme "prefer-light"'
 alias dark='gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"'
 
@@ -22,7 +23,10 @@ alias nv='nvim'
 alias o='opencode'
 alias g='git'
 alias p="cd ~/Projects"
+alias d='cd ~/Downloads'
+alias l='cd ~/Projects/learn'
 
+# Use the latest Zig version for Ziglings
 alias zigdev="$HOME/.local/share/zig-x86_64-linux-0.16.0-dev.1859+212968c57/zig"
 
 # Custom prompt (adapted from bash PS1='[\u@\h \W]\$ ')
