@@ -4,10 +4,11 @@
 
 - [ ] Set up Quarto to use Jupyter Notebook
 - [ ] Set LSP keymaps
-- [ ] Set up GitHub Copilot settings
+- [ ] Create count.nvim and add word counter in winbar
 
 ## P1
 
+- [ ] Some emojis or nerdfonts are marked unknown on fff.nvim
 - [ ] Configure Opencode.nvim display mode (embedded vs external)
     - [ ] Implement save before sending lines to Opencode
     - [ ] Some nice way of getting some text and send it to Opencode
@@ -31,7 +32,6 @@
 - [ ] Check Harpoon and vim marks
 - [ ] Learn quickfix list and jumplist
 - [ ] Scratch buffer tab width adjustment default to 4 (used by Oil preview)
-- [ ] Create count.nvim and add word counter in winbar
 - [ ] Learn vim.schedule() and vim.schedule_wrap() for safe autocmd callbacks
 - [ ] Learn nvim-surround
 - [ ] Dynamic filepath truncation based on window width in winbar
@@ -105,3 +105,4 @@
 - [x] Try cloak.nvim for sensitive data hiding
 - [x] Encode isn't working I guess
 - [x] Update autocmd.lua for the require() var use
+- [x] Set up GitHub Copilot settings

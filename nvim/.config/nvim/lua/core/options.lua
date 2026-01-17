@@ -25,7 +25,7 @@ vim.opt.clipboard = "unnamedplus" -- Use system clipboard for yank/paste
 -- Search
 vim.opt.ignorecase = true -- Case-insensitive search by default
 vim.opt.smartcase = true -- Case-sensitive if search contains uppercase
-vim.o.scrolloff = 4 -- Keep 4 lines visible above/below cursor
+vim.o.scrolloff = 8 -- Keep 4 lines visible above/below cursor
 
 -- File
 vim.o.autowriteall = true -- Auto-save before buffer switch/quit
