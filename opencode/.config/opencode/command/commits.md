@@ -1,7 +1,7 @@
 ---
 description: Plan git commits
 agent: plan
-model: google/antigravity-gemini-3-flash
+# model: google/antigravity-gemini-3-flash
 ---
 
 Analyze the current git changes and plan well-structured, atomic commits.
