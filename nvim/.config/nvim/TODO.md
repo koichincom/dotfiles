@@ -15,7 +15,7 @@
 - [ ] Implement conditional formatting: only format on manual saves, not on auto-saves
     - Problem: Auto-save on FocusLost triggers formatting, which is annoying when working file is formatted
     - Solution: Use buffer-local flag to distinguish manual saves from auto-saves
-    - [ ] Modify lua/plugins/conform.lua: make format_on_save a function that checks vim.b.is_manual_save flag
+    - [ ] Modify lua/plugins/formatter.lua: make format_on_save a function that checks vim.b.is_manual_save flag
     - [ ] Add keymap for manual save that sets the flag before writing (decide: <leader>w vs override :w)
     - [ ] Test: FocusLost should save without formatting, manual save should format
     - Reference: conform.nvim format_on_save can be function(bufnr) returning opts or nil

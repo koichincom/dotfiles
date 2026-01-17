@@ -25,12 +25,6 @@
         },
         "compaction": {
             "model": "github-copilot/gpt-5-mini"
-        },
-        "build": {
-            "model": "github-copilot/gpt-5-mini"
-        },
-        "plan": {
-            "model": "github-copilot/gpt-5-mini"
         }
     }
 }

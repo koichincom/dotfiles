@@ -9,13 +9,13 @@ Neovim configuration guide for agentic coding assistants. This document describe
 ### Formatting
 - **Command**: `stylua lua/` or `stylua <file>`
 - **Config**: `stylua.toml` (4-space indent, Spaces)
-- **Runtime**: conform.nvim in `lua/plugins/conform.lua`
+- **Runtime**: conform.nvim in `lua/plugins/formatter.lua`
   - Supports: Lua (stylua), Python (ruff_format), JS/TS/HTML/CSS/JSON/MD (prettier), C/C++ (clang-format), Zig (zigfmt)
   - Format on save enabled (500ms timeout)
 
 ### Linting
 - **Command**: `luacheck <file>` (if installed)
-- **Runtime**: nvim-lint in `lua/plugins/lint.lua`
+- **Runtime**: nvim-lint in `lua/plugins/linter.lua`
   - Supports: Python (ruff), Lua (luacheck), JS/TS (eslint_d), C/C++ (cpplint), HTML, CSS, Markdown, JSON
   - Triggers: InsertLeave, BufWritePost, TextChanged
 

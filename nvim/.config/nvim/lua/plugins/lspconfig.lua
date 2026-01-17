@@ -1,4 +1,3 @@
--- nvim-lspconfig: Provides baseline LSP server configurations
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
