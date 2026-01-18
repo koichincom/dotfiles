@@ -23,15 +23,9 @@ return {
         },
         {
             "<C-L>",
-            "<Plug>(copilot-next)",
+            "<Plug>(copilot-accept-line)",
             mode = "i",
-            desc = "Copilot Next",
-        },
-        {
-            "<C-H>",
-            "<Plug>(copilot-previous)",
-            mode = "i",
-            desc = "Copilot Previous",
+            desc = "Copilot Accept Line",
         },
         {
             "<C-K>",
