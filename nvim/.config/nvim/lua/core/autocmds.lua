@@ -12,6 +12,7 @@ local wrap_group = vim.api.nvim_create_augroup("MyWrap", { clear = true })
 local auto_write_group = vim.api.nvim_create_augroup("MyAutoWrite", { clear = true })
 local lint_group = vim.api.nvim_create_augroup("MyLint", { clear = true })
 local gh_copilot_group = vim.api.nvim_create_augroup("MyGhCopilot", { clear = true })
+local treesitter_group = vim.api.nvim_create_augroup("MyTreesitter", { clear = true })
 
 function M.init_general()
     local winbar = require("modules.winbar.main")
@@ -293,6 +294,17 @@ function M.init_gh_copilot()
         callback = function()
             gh_copilot.update_winbar()
         end,
+    })
+end
+
+function M.init_treesitter()
+    vim.api.nvim_clear_autocmds({ group = treesitter_group })
+    vim.api.nvim_create_autocmd("FileType", {
+        group = treesitter_group,
+        callback = function()
+            pcall(vim.treesitter.start)
+        end,
+        desc = "Enable treesitter highlighting for all filetypes with installed parsers",
     })
 end
 
