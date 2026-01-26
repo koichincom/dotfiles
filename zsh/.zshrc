@@ -22,9 +22,11 @@ alias n='nvim .'
 alias nv='nvim'
 alias o='opencode'
 alias g='git'
-alias p="cd ~/Projects"
+alias p='cd ~/Projects'
 alias d='cd ~/Downloads'
 alias l='cd ~/Projects/learn'
+alias note='nvim ~/Documents/notes/'
+alias ipy='uv init && uv add ipykernel && uv sync'
 
 # Use the latest Zig version for Ziglings
 alias zigdev="$HOME/.local/share/zig-x86_64-linux-0.16.0-dev.1859+212968c57/zig"
@@ -44,6 +46,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
+
 
 # Source local environment (if exists)
 [[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
