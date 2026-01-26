@@ -121,6 +121,7 @@ function M.render()
         right_group ~= "" and " " or "",
     })
     vim.wo.winbar = winbar
+    -- vim.wo.statusline = winbar
 end
 
 local function is_states_equal(old, new)

@@ -1,7 +1,8 @@
 -- User Interface
--- vim.o.background = "light" -- This will be used before Neovim sets based on the terminal background
+vim.o.background = "light" -- This will be used before Neovim sets based on the terminal background
 vim.opt.termguicolors = true -- Enable true color support (16 million colors)
-vim.opt.laststatus = 0 -- Hide status line in favor of using winbar and noice.nvim
+vim.opt.laststatus = 0 -- Hide status line in favor of using winbar
+vim.opt.cmdheight = 0 -- Hide command line unless needed
 vim.opt.title = true -- Set terminal title
 vim.opt.titlelen = 0 -- No limit on title length
 vim.opt.titlestring = "Neovim" -- Set title to Neovim in the terminal titlebar
@@ -39,8 +40,6 @@ vim.wo.linebreak = true -- Wrap lines at convenient points (always true)
 
 vim.wo.list = true
 vim.opt.listchars = {
-    -- leadmultispace = "├···",
-    -- follow the default shiftwidth, but updated with .editorconfig by module/list.lua
     tab = ">·",
     space = "·",
     trail = "+",

@@ -115,6 +115,7 @@ function M.switch_namespace(is_active, is_light, mode, is_for_current_win)
 
             -- In some cases, following way might be more efficient, but the conditions and
             -- break-even point is unknown, and the difference should be negligilble
+
             -- nvim_set_hl_ns once, and nvim_win_set_hl_ns once for the active window
         end
     end
