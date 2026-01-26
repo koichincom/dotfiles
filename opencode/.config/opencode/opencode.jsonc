@@ -3,12 +3,12 @@
     "model": "github-copilot/gpt-5-mini",
     "default_agent": "plan",
     "permission": {
-        "edit": "allow",
-        "read": "allow",
-        "bash": "allow",
-        "webfetch": "allow",
-        "doom_loop": "allow",
-        "external_directory": "allow"
+        "*": "allow",
+        "btca_config_resources_remove": "ask",
+        "btca_clear": "ask",
+    },
+    "keybinds": {
+        "editor_open": "Ctrl+I",
     },
     "agent": {
         "general": {
@@ -17,14 +17,14 @@
         "explore": {
             "model": "github-copilot/gpt-5-mini"
         },
-        "title": {
-            "model": "github-copilot/gpt-4.1"
-        },
         "summary": {
             "model": "github-copilot/gpt-5-mini"
         },
         "compaction": {
             "model": "github-copilot/gpt-5-mini"
-        }
+        },
+        "title": {
+            "model": "github-copilot/gpt-4.1"
+        },
     }
 }
