@@ -3,7 +3,7 @@ return {
     "mason-org/mason.nvim",
     opts = {},
     dependencies = {
-        "williamboman/mason-lspconfig.nvim",
+        "mason-org/mason-lspconfig.nvim",
         "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
     config = function()
@@ -20,12 +20,12 @@ return {
                 "html",
                 "jsonls",
                 "lua_ls",
-                "pyright",
                 "stylua",
                 "ts_ls",
                 "astro",
                 "glsl_analyzer",
                 "zls",
+                "ty",
             },
         })
 
