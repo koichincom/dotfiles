@@ -11,23 +11,25 @@ Analyze current git changes and plan atomic, well-structured commits.
 Read the following outputs to understand the repo state:
 
 Git status:
-!`git status --short`
+!`git status --short --untracked-files=all`
 
 Changed files summary:
 !`git diff --name-status`
 !`git diff --staged --name-status`
+Untracked files:
+!`git ls-files --others --exclude-standard`
 
 Recent commits (for style reference):
 !`git log --format=%s -5`
 
 ### Step 1: Analyze and Group Changes
 
-**Scope Policy**: Only plan commits for changes that ACTUALLY EXIST in the status output above. Do NOT suggest commits for work that is not present. If you notice follow-ups (e.g., add a file to .gitignore), do NOT include them as planned commits.
+**Scope Policy**: Only plan commits for changes that ACTUALLY EXIST in the status output above (including untracked files). Do NOT suggest commits for work that is not present. If you notice follow-ups (e.g., add a file to .gitignore), do NOT include them as planned commits.
 
 **Process**:
 
 - If git status shows NO changes (no staged, no unstaged, no untracked), skip to Step 3 and report "No commits planned."
-- Review the changed files summary above.
+- Review the changed files summary above (tracked and untracked).
 - If you need detailed diff context to understand intent, run `git diff <file>` or `git diff --staged <file>` selectively.
 - Only read files that appear in the status to understand context; do not scan unrelated files.
 
