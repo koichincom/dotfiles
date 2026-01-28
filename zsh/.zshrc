@@ -26,7 +26,7 @@ alias p='cd ~/Projects'
 alias d='cd ~/Downloads'
 alias l='cd ~/Projects/learn'
 alias note='nvim ~/Documents/notes/'
-alias ipy='uv init && uv add ipykernel && uv sync'
+alias ipyinit='uv init && uv add ipykernel && uv sync'
 
 # Use the latest Zig version for Ziglings
 alias zigdev="$HOME/.local/share/zig-x86_64-linux-0.16.0-dev.1859+212968c57/zig"
