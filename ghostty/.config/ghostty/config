@@ -1,7 +1,7 @@
 # Non-mono font for flexible NerdFont width
 font-family = "IosevkaTerm NF"
-# font-family = "Symbols Nerd Font"
-# font-family = "Noto Color Emoji"
+font-family = "Symbols Nerd Font"
+font-family = "Noto Color Emoji"
 
 adjust-cell-height = 15%
 
